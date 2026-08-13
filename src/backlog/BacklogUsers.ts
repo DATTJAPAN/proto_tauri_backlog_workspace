@@ -8,7 +8,7 @@ export type BacklogUser = {
     name: string
     roleType: number
     lang: string | null
-    mailAddress: string
+    mailAddress: string | null
     nulabAccount: {
         nulabId: string
         name: string

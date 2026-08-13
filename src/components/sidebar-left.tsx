@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import {HomeIcon, ShieldCheckIcon} from 'lucide-react'
+import {HomeIcon, ListTodoIcon, ShieldCheckIcon} from 'lucide-react'
 
 import {NavMain} from "@/components/nav-main"
 import {NavSecondary} from "@/components/nav-secondary"
@@ -20,6 +20,11 @@ const data = {
             title: "Home",
             url: "/dashboard/",
             icon: <HomeIcon/>,
+        },
+        {
+            title: "Issues",
+            url: "/issues/",
+            icon: <ListTodoIcon/>,
         },
     ],
     navSecondary: [

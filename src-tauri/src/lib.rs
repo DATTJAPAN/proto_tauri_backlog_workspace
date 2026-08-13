@@ -4,6 +4,7 @@ use rand::RngCore;
 use tauri::Manager;
 
 mod backlog;
+mod http_request;
 
 const KEYRING_SERVICE: &str = "com.james.proto_tauri_backlog_workspace";
 const KEYRING_USER: &str = "stronghold-vault";
@@ -13,7 +14,6 @@ const KEYRING_USER: &str = "stronghold-vault";
 fn greet(name: &str) -> String {
     format!("Hello, {}! You've been greeted from Rust!", name)
 }
-
 
 /// Loads the repository's `.env.local` during development only.
 /// Production credentials must come from runtime configuration or secure storage;
@@ -32,14 +32,14 @@ fn load_local_env() {
             "BACKLOG_CLIENT_ID",
             "BACKLOG_CLIENT_SECRET",
         ]
-            .map(|name| {
-                let status = std::env::var(name)
-                    .is_ok_and(|value| !value.trim().is_empty())
-                    .then_some("configured")
-                    .unwrap_or("missing");
-                format!("{name}={status}")
-            })
-            .join(", ");
+        .map(|name| {
+            let status = std::env::var(name)
+                .is_ok_and(|value| !value.trim().is_empty())
+                .then_some("configured")
+                .unwrap_or("missing");
+            format!("{name}={status}")
+        })
+        .join(", ");
 
         println!(
             "[env] Loaded {} ({configured_variables})",
@@ -54,8 +54,9 @@ fn load_local_env() {
 fn load_local_env() {}
 #[tauri::command]
 fn get_or_create_vault_password() -> Result<String, String> {
-    let entry = Entry::new(KEYRING_SERVICE, KEYRING_USER)
-        .map_err(|error| format!("Could not access the operating system credential store: {error}"))?;
+    let entry = Entry::new(KEYRING_SERVICE, KEYRING_USER).map_err(|error| {
+        format!("Could not access the operating system credential store: {error}")
+    })?;
 
     match entry.get_password() {
         Ok(password) => Ok(password),
@@ -64,9 +65,9 @@ fn get_or_create_vault_password() -> Result<String, String> {
             rand::rng().fill_bytes(&mut password_bytes);
             let password = STANDARD.encode(password_bytes);
 
-            entry
-                .set_password(&password)
-                .map_err(|error| format!("Could not save the Stronghold vault password: {error}"))?;
+            entry.set_password(&password).map_err(|error| {
+                format!("Could not save the Stronghold vault password: {error}")
+            })?;
 
             Ok(password)
         }
@@ -96,12 +97,13 @@ pub fn run() {
             let salt_path = app
                 .path()
                 .app_local_data_dir()
-                .map_err(|error| format!("Could not resolve the application data directory: {error}"))?
+                .map_err(|error| {
+                    format!("Could not resolve the application data directory: {error}")
+                })?
                 .join("stronghold-salt");
 
-            app.handle().plugin(
-                tauri_plugin_stronghold::Builder::with_argon2(&salt_path).build(),
-            )?;
+            app.handle()
+                .plugin(tauri_plugin_stronghold::Builder::with_argon2(&salt_path).build())?;
 
             Ok(())
         })
@@ -114,6 +116,8 @@ pub fn run() {
             backlog::oauth::backlog_connection_status,
             backlog::oauth::backlog_api_key_connection_status,
             backlog::project::backlog_project_list,
+            backlog::project_issue::backlog_project_issue_list,
+            backlog::project_issue::backlog_project_issue_count,
             backlog::user::backlog_get_current_user,
         ])
         .run(tauri::generate_context!())
