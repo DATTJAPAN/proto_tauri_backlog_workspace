@@ -1,0 +1,5630 @@
+{
+  "info": {
+    "_postman_id": "610d99cf-b0ee-4592-9e5c-9f3ab2018922",
+    "name": "Backlog API v2",
+    "description": "Flat list of Backlog API v2 requests. Every request visibly uses the apiKey query parameter.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "noauth"
+  },
+  "item": [
+    {
+      "name": "Space - Get Space",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/space?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "space"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Space - Get Recent Updates",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/space/activities?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "space",
+            "activities"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Space - Get Activity",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/activities/{{activityId}}?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "activities",
+            "{{activityId}}"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Space - Get Space Logo",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/space/image?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "space",
+            "image"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Space - Get Space Notification",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/space/notification?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "space",
+            "notification"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Space - Update Space Notification",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/space/notification?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "space",
+            "notification"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": []
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Space - Get Space Disk Usage",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/space/diskUsage?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "space",
+            "diskUsage"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Attachments - Post Attachment File",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/space/attachment?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "space",
+            "attachment"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": []
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Users - Get User List",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/users?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "users"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Users - Get User",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/users/{{userId}}?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "users",
+            "{{userId}}"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Users - Get Own User",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/users/myself?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "users",
+            "myself"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Users - Get User Icon",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/users/{{userId}}/icon?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "users",
+            "{{userId}}",
+            "icon"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Users - Get User Recent Updates",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/users/{{userId}}/activities?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "users",
+            "{{userId}}",
+            "activities"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Users - Get Received Star List",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/users/{{userId}}/stars?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "users",
+            "{{userId}}",
+            "stars"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Users - Count User Received Stars",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/users/{{userId}}/stars/count?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "users",
+            "{{userId}}",
+            "stars",
+            "count"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Users - Get Recently Viewed Issues",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/users/myself/recentlyViewedIssues?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "users",
+            "myself",
+            "recentlyViewedIssues"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Users - Add Recently Viewed Issue",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/users/myself/recentlyViewedIssues?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "users",
+            "myself",
+            "recentlyViewedIssues"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": []
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Users - Get Recently Viewed Projects",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/users/myself/recentlyViewedProjects?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "users",
+            "myself",
+            "recentlyViewedProjects"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Users - Get Recently Viewed Wikis",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/users/myself/recentlyViewedWikis?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "users",
+            "myself",
+            "recentlyViewedWikis"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Projects - Get Project List",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Projects - Add Project",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": []
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Projects - Get Project",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Projects - Update Project",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": []
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Projects - Delete Project",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Projects - Get Project Icon",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/image?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "image"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Projects - Get Project Recent Updates",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/activities?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "activities"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Projects - Add Project User",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/users?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "users"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": []
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Projects - Get Project User List",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/users?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "users"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Projects - Delete Project User",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/users?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "users"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Projects - Add Project Administrator",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/administrators?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "administrators"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": []
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Projects - Get Project Administrators",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/administrators?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "administrators"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Projects - Delete Project Administrator",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/administrators?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "administrators"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Projects - Get Status List",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/statuses?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "statuses"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Projects - Add Status",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/statuses?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "statuses"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": []
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Projects - Update Status",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/statuses/{{statusId}}?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "statuses",
+            "{{statusId}}"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": []
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Projects - Delete Status",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/statuses/{{statusId}}?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "statuses",
+            "{{statusId}}"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Projects - Update Status Order",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/statuses/updateDisplayOrder?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "statuses",
+            "updateDisplayOrder"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": []
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Projects - Get Issue Type List",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/issueTypes?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "issueTypes"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Projects - Add Issue Type",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/issueTypes?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "issueTypes"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": []
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Projects - Update Issue Type",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/issueTypes/{{id}}?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "issueTypes",
+            "{{id}}"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": []
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Projects - Delete Issue Type",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/issueTypes/{{id}}?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "issueTypes",
+            "{{id}}"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Projects - Get Category List",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/categories?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "categories"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Projects - Add Category",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/categories?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "categories"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": []
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Projects - Update Category",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/categories/{{id}}?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "categories",
+            "{{id}}"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": []
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Projects - Delete Category",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/categories/{{id}}?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "categories",
+            "{{id}}"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Projects - Get Version/Milestone List",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/versions?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "versions"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Projects - Add Version/Milestone",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/versions?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "versions"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": []
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Projects - Update Version/Milestone",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/versions/{{id}}?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "versions",
+            "{{id}}"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": []
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Projects - Delete Version",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/versions/{{id}}?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "versions",
+            "{{id}}"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Projects - Get Custom Field List",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/customFields?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "customFields"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Projects - Add Custom Field",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/customFields?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "customFields"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": []
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Projects - Update Custom Field",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/customFields/{{id}}?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "customFields",
+            "{{id}}"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": []
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Projects - Delete Custom Field",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/customFields/{{id}}?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "customFields",
+            "{{id}}"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Projects - Add Custom Field List Item",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/customFields/{{id}}/items?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "customFields",
+            "{{id}}",
+            "items"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": []
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Projects - Update Custom Field List Item",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/customFields/{{id}}/items/{{itemId}}?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "customFields",
+            "{{id}}",
+            "items",
+            "{{itemId}}"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": []
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Projects - Delete Custom Field List Item",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/customFields/{{id}}/items/{{itemId}}?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "customFields",
+            "{{id}}",
+            "items",
+            "{{itemId}}"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Projects - Get Shared File List",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/files/metadata/{{path}}?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "files",
+            "metadata",
+            "{{path}}"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Projects - Get Shared File",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/files/{{sharedFileId}}?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "files",
+            "{{sharedFileId}}"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Projects - Get Project Disk Usage",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/diskUsage?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "diskUsage"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Webhooks - Get Webhook List",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/webhooks?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "webhooks"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Webhooks - Add Webhook",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/webhooks?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "webhooks"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": []
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Webhooks - Get Webhook",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/webhooks/{{webhookId}}?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "webhooks",
+            "{{webhookId}}"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Webhooks - Update Webhook",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/webhooks/{{webhookId}}?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "webhooks",
+            "{{webhookId}}"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": []
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Webhooks - Delete Webhook",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/webhooks/{{webhookId}}?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "webhooks",
+            "{{webhookId}}"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Issues - Get Issue List",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/issues?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "issues"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Issues - Count Issues",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/issues/count?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "issues",
+            "count"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Issues - Add Issue",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/issues?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "issues"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": []
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Issues - Get Issue",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/issues/{{issueIdOrKey}}?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "issues",
+            "{{issueIdOrKey}}"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Issues - Update Issue",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/issues/{{issueIdOrKey}}?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "issues",
+            "{{issueIdOrKey}}"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": []
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Issues - Delete Issue",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/issues/{{issueIdOrKey}}?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "issues",
+            "{{issueIdOrKey}}"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Issues - Get Comment List",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/issues/{{issueIdOrKey}}/comments?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "issues",
+            "{{issueIdOrKey}}",
+            "comments"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Issues - Add Comment",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/issues/{{issueIdOrKey}}/comments?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "issues",
+            "{{issueIdOrKey}}",
+            "comments"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": []
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Issues - Count Comments",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/issues/{{issueIdOrKey}}/comments/count?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "issues",
+            "{{issueIdOrKey}}",
+            "comments",
+            "count"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Issues - Get Comment",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/issues/{{issueIdOrKey}}/comments/{{commentId}}?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "issues",
+            "{{issueIdOrKey}}",
+            "comments",
+            "{{commentId}}"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Issues - Delete Comment",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/issues/{{issueIdOrKey}}/comments/{{commentId}}?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "issues",
+            "{{issueIdOrKey}}",
+            "comments",
+            "{{commentId}}"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Issues - Update Comment",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/issues/{{issueIdOrKey}}/comments/{{commentId}}?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "issues",
+            "{{issueIdOrKey}}",
+            "comments",
+            "{{commentId}}"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": []
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Issues - Get Comment Notifications",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/issues/{{issueIdOrKey}}/comments/{{commentId}}/notifications?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "issues",
+            "{{issueIdOrKey}}",
+            "comments",
+            "{{commentId}}",
+            "notifications"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Issues - Add Comment Notification",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/issues/{{issueIdOrKey}}/comments/{{commentId}}/notifications?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "issues",
+            "{{issueIdOrKey}}",
+            "comments",
+            "{{commentId}}",
+            "notifications"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": []
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Issues - Get Issue Attachments",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/issues/{{issueIdOrKey}}/attachments?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "issues",
+            "{{issueIdOrKey}}",
+            "attachments"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Issues - Get Issue Attachment",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/issues/{{issueIdOrKey}}/attachments/{{attachmentId}}?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "issues",
+            "{{issueIdOrKey}}",
+            "attachments",
+            "{{attachmentId}}"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Issues - Delete Issue Attachment",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/issues/{{issueIdOrKey}}/attachments/{{attachmentId}}?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "issues",
+            "{{issueIdOrKey}}",
+            "attachments",
+            "{{attachmentId}}"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Issues - Get Issue Participants",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/issues/{{issueIdOrKey}}/participants?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "issues",
+            "{{issueIdOrKey}}",
+            "participants"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Issues - Get Linked Shared Files",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/issues/{{issueIdOrKey}}/sharedFiles?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "issues",
+            "{{issueIdOrKey}}",
+            "sharedFiles"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Issues - Link Shared Files",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/issues/{{issueIdOrKey}}/sharedFiles?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "issues",
+            "{{issueIdOrKey}}",
+            "sharedFiles"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": []
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Issues - Remove Shared File Link",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/issues/{{issueIdOrKey}}/sharedFiles/{{id}}?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "issues",
+            "{{issueIdOrKey}}",
+            "sharedFiles",
+            "{{id}}"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Issues - Get Related Issues",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/issues/{{issueIdOrKey}}/relatedIssues?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "issues",
+            "{{issueIdOrKey}}",
+            "relatedIssues"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Issues - Add Related Issue",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/issues/{{issueIdOrKey}}/relatedIssues?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "issues",
+            "{{issueIdOrKey}}",
+            "relatedIssues"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": []
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Issues - Remove Related Issue",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/issues/{{issueIdOrKey}}/relatedIssues/{{relatedIssueIdOrKey}}?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "issues",
+            "{{issueIdOrKey}}",
+            "relatedIssues",
+            "{{relatedIssueIdOrKey}}"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Documents - Get Document List",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/documents?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "documents"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Documents - Add Document",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/documents?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "documents"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": []
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Documents - Get Document",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/documents/{{documentId}}?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "documents",
+            "{{documentId}}"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Documents - Get Document Tree",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/documents/tree?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "documents",
+            "tree"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Documents - Get Document Attachments",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/documents/{{documentId}}/attachments?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "documents",
+            "{{documentId}}",
+            "attachments"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Documents - Delete Document",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/documents/{{documentId}}?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "documents",
+            "{{documentId}}"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Documents - Get Document Comments",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/documents/{{documentId}}/comments?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "documents",
+            "{{documentId}}",
+            "comments"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Documents - Add Document Tag",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/documents/{{documentId}}/tags?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "documents",
+            "{{documentId}}",
+            "tags"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": []
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Documents - Remove Document Tag",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/documents/{{documentId}}/tags/{{tagId}}?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "documents",
+            "{{documentId}}",
+            "tags",
+            "{{tagId}}"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Documents - Count Documents",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/documents/count?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "documents",
+            "count"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Wikis - Get Wiki Page List",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/wikis?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "wikis"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Wikis - Count Wiki Pages",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/wikis/count?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "wikis",
+            "count"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Wikis - Get Wiki Tags",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/wikis/tags?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "wikis",
+            "tags"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Wikis - Add Wiki Page",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/wikis?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "wikis"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": []
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Wikis - Get Wiki Page",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/wikis/{{wikiId}}?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "wikis",
+            "{{wikiId}}"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Wikis - Update Wiki Page",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/wikis/{{wikiId}}?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "wikis",
+            "{{wikiId}}"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": []
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Wikis - Delete Wiki Page",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/wikis/{{wikiId}}?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "wikis",
+            "{{wikiId}}"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Wikis - Get Wiki Attachments",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/wikis/{{wikiId}}/attachments?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "wikis",
+            "{{wikiId}}",
+            "attachments"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Wikis - Attach File to Wiki",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/wikis/{{wikiId}}/attachments?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "wikis",
+            "{{wikiId}}",
+            "attachments"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": []
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Wikis - Get Wiki Attachment",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/wikis/{{wikiId}}/attachments/{{attachmentId}}?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "wikis",
+            "{{wikiId}}",
+            "attachments",
+            "{{attachmentId}}"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Wikis - Remove Wiki Attachment",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/wikis/{{wikiId}}/attachments/{{attachmentId}}?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "wikis",
+            "{{wikiId}}",
+            "attachments",
+            "{{attachmentId}}"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Wikis - Get Wiki Shared Files",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/wikis/{{wikiId}}/sharedFiles?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "wikis",
+            "{{wikiId}}",
+            "sharedFiles"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Wikis - Link Shared Files to Wiki",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/wikis/{{wikiId}}/sharedFiles?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "wikis",
+            "{{wikiId}}",
+            "sharedFiles"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": []
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Wikis - Remove Wiki Shared File Link",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/wikis/{{wikiId}}/sharedFiles/{{id}}?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "wikis",
+            "{{wikiId}}",
+            "sharedFiles",
+            "{{id}}"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Wikis - Get Wiki History",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/wikis/{{wikiId}}/history?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "wikis",
+            "{{wikiId}}",
+            "history"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Wikis - Get Wiki Stars",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/wikis/{{wikiId}}/stars?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "wikis",
+            "{{wikiId}}",
+            "stars"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Stars - Add Star",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/stars?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "stars"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": []
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Stars - Remove Star",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/stars/{{starId}}?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "stars",
+            "{{starId}}"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Notifications - Get Notifications",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/notifications?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "notifications"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Notifications - Count Notifications",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/notifications/count?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "notifications",
+            "count"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Notifications - Reset Unread Notification Count",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/notifications/markAsRead?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "notifications",
+            "markAsRead"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": []
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Notifications - Mark Notification as Read",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/notifications/{{id}}/markAsRead?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "notifications",
+            "{{id}}",
+            "markAsRead"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": []
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Git - Get Git Repositories",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/git/repositories?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "git",
+            "repositories"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Git - Get Git Repository",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/git/repositories/{{repoIdOrName}}?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "git",
+            "repositories",
+            "{{repoIdOrName}}"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Git - Get Pull Request List",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/git/repositories/{{repoIdOrName}}/pullRequests?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "git",
+            "repositories",
+            "{{repoIdOrName}}",
+            "pullRequests"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Git - Count Pull Requests",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/git/repositories/{{repoIdOrName}}/pullRequests/count?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "git",
+            "repositories",
+            "{{repoIdOrName}}",
+            "pullRequests",
+            "count"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Git - Add Pull Request",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/git/repositories/{{repoIdOrName}}/pullRequests?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "git",
+            "repositories",
+            "{{repoIdOrName}}",
+            "pullRequests"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": []
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Git - Get Pull Request",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/git/repositories/{{repoIdOrName}}/pullRequests/{{number}}?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "git",
+            "repositories",
+            "{{repoIdOrName}}",
+            "pullRequests",
+            "{{number}}"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Git - Update Pull Request",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/git/repositories/{{repoIdOrName}}/pullRequests/{{number}}?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "git",
+            "repositories",
+            "{{repoIdOrName}}",
+            "pullRequests",
+            "{{number}}"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": []
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Git - Get Pull Request Comments",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/git/repositories/{{repoIdOrName}}/pullRequests/{{number}}/comments?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "git",
+            "repositories",
+            "{{repoIdOrName}}",
+            "pullRequests",
+            "{{number}}",
+            "comments"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Git - Add Pull Request Comment",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/git/repositories/{{repoIdOrName}}/pullRequests/{{number}}/comments?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "git",
+            "repositories",
+            "{{repoIdOrName}}",
+            "pullRequests",
+            "{{number}}",
+            "comments"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": []
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Git - Count Pull Request Comments",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/git/repositories/{{repoIdOrName}}/pullRequests/{{number}}/comments/count?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "git",
+            "repositories",
+            "{{repoIdOrName}}",
+            "pullRequests",
+            "{{number}}",
+            "comments",
+            "count"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Git - Update Pull Request Comment",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/git/repositories/{{repoIdOrName}}/pullRequests/{{number}}/comments/{{commentId}}?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "git",
+            "repositories",
+            "{{repoIdOrName}}",
+            "pullRequests",
+            "{{number}}",
+            "comments",
+            "{{commentId}}"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": []
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Git - Get Pull Request Attachments",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/git/repositories/{{repoIdOrName}}/pullRequests/{{number}}/attachments?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "git",
+            "repositories",
+            "{{repoIdOrName}}",
+            "pullRequests",
+            "{{number}}",
+            "attachments"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Git - Download Pull Request Attachment",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/git/repositories/{{repoIdOrName}}/pullRequests/{{number}}/attachments/{{attachmentId}}?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "git",
+            "repositories",
+            "{{repoIdOrName}}",
+            "pullRequests",
+            "{{number}}",
+            "attachments",
+            "{{attachmentId}}"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Git - Delete Pull Request Attachment",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/git/repositories/{{repoIdOrName}}/pullRequests/{{number}}/attachments/{{attachmentId}}?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "git",
+            "repositories",
+            "{{repoIdOrName}}",
+            "pullRequests",
+            "{{number}}",
+            "attachments",
+            "{{attachmentId}}"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Watching - Get Watching List",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/users/{{userId}}/watchings?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "users",
+            "{{userId}}",
+            "watchings"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Watching - Count Watching",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/users/{{userId}}/watchings/count?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "users",
+            "{{userId}}",
+            "watchings",
+            "count"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Watching - Get Watching",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/watchings/{{watchingId}}?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "watchings",
+            "{{watchingId}}"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Watching - Add Watching",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/watchings?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "watchings"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": []
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Watching - Update Watching",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/watchings/{{watchingId}}?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "watchings",
+            "{{watchingId}}"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": []
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Watching - Delete Watching",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/watchings/{{watchingId}}?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "watchings",
+            "{{watchingId}}"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Watching - Mark Watching as Read",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/watchings/{{watchingId}}/markAsRead?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "watchings",
+            "{{watchingId}}",
+            "markAsRead"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": []
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Teams - Get Team List",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/teams?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "teams"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Teams - Get Team",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/teams/{{teamId}}?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "teams",
+            "{{teamId}}"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Teams - Get Team Icon",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/teams/{{teamId}}/icon?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "teams",
+            "{{teamId}}",
+            "icon"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Teams - Get Project Teams",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/teams?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "teams"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Teams - Add Project Team",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/teams?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "teams"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": []
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Teams - Delete Project Team",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/projects/{{projectIdOrKey}}/teams?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "projects",
+            "{{projectIdOrKey}}",
+            "teams"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Other - Get Priority List",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/priorities?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "priorities"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Other - Get Resolution List",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/resolutions?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "resolutions"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Other - Get Licence",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/space/licence?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "space",
+            "licence"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Other - Get Rate Limit",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v2/rateLimit?apiKey={{apiKey}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "rateLimit"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{apiKey}}",
+              "description": "Backlog API key"
+            }
+          ]
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://dattjapan.backlog.com",
+      "type": "string"
+    },
+    {
+      "key": "activityId",
+      "value": "<activityId>",
+      "type": "string"
+    },
+    {
+      "key": "attachmentId",
+      "value": "<attachmentId>",
+      "type": "string"
+    },
+    {
+      "key": "commentId",
+      "value": "<commentId>",
+      "type": "string"
+    },
+    {
+      "key": "documentId",
+      "value": "<documentId>",
+      "type": "string"
+    },
+    {
+      "key": "id",
+      "value": "<id>",
+      "type": "string"
+    },
+    {
+      "key": "issueIdOrKey",
+      "value": "<issueIdOrKey>",
+      "type": "string"
+    },
+    {
+      "key": "itemId",
+      "value": "<itemId>",
+      "type": "string"
+    },
+    {
+      "key": "number",
+      "value": "<number>",
+      "type": "string"
+    },
+    {
+      "key": "path",
+      "value": "<path>",
+      "type": "string"
+    },
+    {
+      "key": "projectIdOrKey",
+      "value": "<projectIdOrKey>",
+      "type": "string"
+    },
+    {
+      "key": "relatedIssueIdOrKey",
+      "value": "<relatedIssueIdOrKey>",
+      "type": "string"
+    },
+    {
+      "key": "repoIdOrName",
+      "value": "<repoIdOrName>",
+      "type": "string"
+    },
+    {
+      "key": "sharedFileId",
+      "value": "<sharedFileId>",
+      "type": "string"
+    },
+    {
+      "key": "starId",
+      "value": "<starId>",
+      "type": "string"
+    },
+    {
+      "key": "statusId",
+      "value": "<statusId>",
+      "type": "string"
+    },
+    {
+      "key": "tagId",
+      "value": "<tagId>",
+      "type": "string"
+    },
+    {
+      "key": "teamId",
+      "value": "<teamId>",
+      "type": "string"
+    },
+    {
+      "key": "userId",
+      "value": "<userId>",
+      "type": "string"
+    },
+    {
+      "key": "watchingId",
+      "value": "<watchingId>",
+      "type": "string"
+    },
+    {
+      "key": "webhookId",
+      "value": "<webhookId>",
+      "type": "string"
+    },
+    {
+      "key": "wikiId",
+      "value": "<wikiId>",
+      "type": "string"
+    }
+  ]
+}
