@@ -1,19 +1,34 @@
 import {invoke} from '@tauri-apps/api/core'
 
 import type {BacklogAuthentication} from './BacklogAuthentication'
+import type {BacklogProjectIssueNamedResource} from './BacklogProjectIssueNamedResource'
+import type {BacklogProjectStatus} from './BacklogProjectStatus'
+import type {BacklogUser} from './BacklogUsers'
 
-type NamedResource = {id: number; name: string}
+export type BacklogProjectIssueType = {
+  id: number
+  projectId: number
+  name: string
+  color: string
+  displayOrder: number
+}
 
 export type BacklogProjectIssue = {
   id: number
   projectId: number
   issueKey: string
   summary: string
-  issueType: NamedResource & {color: string}
-  status: NamedResource & {color: string}
-  priority: NamedResource
-  assignee: {id: number; name: string} | null
+  issueType: BacklogProjectIssueType
+  status: BacklogProjectStatus
+  priority: BacklogProjectIssueNamedResource
+  assignee: BacklogUser | null
+  startDate: string | null
   dueDate: string | null
+  estimatedHours: number | null
+  actualHours: number | null
+  createdUser: BacklogUser | null
+  created: string
+  updatedUser: BacklogUser | null
   updated: string
 }
 

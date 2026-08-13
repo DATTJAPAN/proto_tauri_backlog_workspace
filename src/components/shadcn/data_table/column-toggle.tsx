@@ -1,3 +1,4 @@
+import {startTransition} from 'react'
 import type {ReactTable, RowData} from '@tanstack/react-table'
 import {Settings2Icon} from 'lucide-react'
 
@@ -25,7 +26,7 @@ export function DataTableViewOptions<TData extends RowData>({table}: {table: Rea
       <DropdownMenuTrigger render={<Button variant="outline" size="sm" className="ml-auto h-8" />}>
         <Settings2Icon /> View
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-44">
+      <DropdownMenuContent align="end" className="w-44 bg-popover before:hidden">
         <DropdownMenuGroup>
           <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
           <DropdownMenuSeparator />
@@ -34,7 +35,7 @@ export function DataTableViewOptions<TData extends RowData>({table}: {table: Rea
               key={column.id}
               className="capitalize"
               checked={column.getIsVisible()}
-              onCheckedChange={(checked) => column.toggleVisibility(checked)}
+              onCheckedChange={(checked) => startTransition(() => column.toggleVisibility(checked))}
             >
               {column.id}
             </DropdownMenuCheckboxItem>

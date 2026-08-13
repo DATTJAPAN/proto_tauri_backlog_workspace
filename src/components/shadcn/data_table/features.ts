@@ -1,5 +1,7 @@
 import {
   columnFilteringFeature,
+  columnPinningFeature,
+  columnSizingFeature,
   columnVisibilityFeature,
   createFilteredRowModel,
   createPaginatedRowModel,
@@ -17,6 +19,8 @@ import {
 // register is tree-shaken out of the bundle.
 export const features = tableFeatures({
   columnFilteringFeature,
+  columnSizingFeature,
+  columnPinningFeature,
   columnVisibilityFeature,
   rowPaginationFeature,
   rowSelectionFeature,
