@@ -7,8 +7,8 @@ import {AppShell} from '@/layout/shell/app-shell'
 import {backlog} from '@/backlog/backlog'
 
 export const Route = createFileRoute('/dashboard/')({
-  beforeLoad: () => {
-    if (!backlog.isConnected()) {
+  beforeLoad: async () => {
+    if (!await backlog.isConnected()) {
       throw redirect({to: '/on-boarding'})
     }
   },

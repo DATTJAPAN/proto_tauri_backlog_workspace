@@ -1,64 +1,63 @@
+import {BacklogEvent} from './event/BacklogEvent'
+import {StrongholdStorage} from './tauri/stronghold'
+
 export type BacklogAuthMethod = 'api-key' | 'oauth'
 
 export type BacklogConnection = {
-  method: BacklogAuthMethod
-  spaceUrl: string
-  apiKey?: string
-  accessToken?: string
-  refreshToken?: string
-  tokenType?: string
-  expiresAt?: number
-  spaceKey?: string
-  spaceName?: string
+    method: BacklogAuthMethod
+    spaceUrl: string
+    apiKey?: string
+    accessToken?: string
+    refreshToken?: string
+    tokenType?: string
+    expiresAt?: number
+    spaceKey?: string
+    spaceName?: string
 }
 
 const STORAGE_KEY = 'datt-backlog-connection'
-const LEGACY_API_KEY = 'datt-backlog-api-key'
-const CONNECTION_CHANGED_EVENT = 'backlog-connection-changed'
+const CONNECTION_CHANGED_EVENT_NAME = 'backlog-connection-changed'
 
 export class BacklogAuthentication {
-  public getConnection(): BacklogConnection | null {
-    const stored = localStorage.getItem(STORAGE_KEY)
-    if (stored) {
-      try {
-        return JSON.parse(stored) as BacklogConnection
-      } catch {
-        localStorage.removeItem(STORAGE_KEY)
-      }
+    private readonly _storage: StrongholdStorage
+    private readonly _connectionChangedEvent = BacklogEvent.global(
+        CONNECTION_CHANGED_EVENT_NAME,
+    )
+
+    public constructor(storage: StrongholdStorage) {
+        this._storage = storage
     }
 
-    localStorage.removeItem(LEGACY_API_KEY)
-    return null
-  }
+    public async getConnection(): Promise<BacklogConnection | null> {
+        return this._storage.get<BacklogConnection>(STORAGE_KEY)
+    }
 
-  public saveConnection(connection: BacklogConnection): void {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(connection))
-    localStorage.removeItem(LEGACY_API_KEY)
-    window.dispatchEvent(new Event(CONNECTION_CHANGED_EVENT))
-  }
+    public async saveConnection(connection: BacklogConnection): Promise<void> {
+        await this._storage.set(STORAGE_KEY, connection)
+        this._connectionChangedEvent.dispatch()
+    }
 
-  public clearConnection(): void {
-    localStorage.removeItem(STORAGE_KEY)
-    localStorage.removeItem(LEGACY_API_KEY)
-    window.dispatchEvent(new Event(CONNECTION_CHANGED_EVENT))
-  }
+    public async clearConnection(): Promise<void> {
+        await this._storage.remove(STORAGE_KEY)
+        this._connectionChangedEvent.dispatch()
+    }
 
-  public getApiKey(): string {
-    return this.getConnection()?.apiKey ?? ''
-  }
+    public async getApiKey(): Promise<string> {
+        return (await this.getConnection())?.apiKey ?? ''
+    }
 
-  public saveApiKey(spaceUrl: string, apiKey: string): void {
-    this.saveConnection({
-      method: 'api-key',
-      spaceUrl: spaceUrl.trim(),
-      apiKey: apiKey.trim(),
-    })
-  }
+    public async saveApiKey(spaceUrl: string, apiKey: string): Promise<void> {
+        await this.saveConnection({
+            method: 'api-key',
+            spaceUrl: spaceUrl.trim(),
+            apiKey: apiKey.trim(),
+        })
+    }
 
-  public hasConnection(): boolean {
-    const connection = this.getConnection()
-    return Boolean(connection?.spaceUrl && (
-      connection.method === 'api-key' ? connection.apiKey : connection.accessToken
-    ))
-  }
+    public async hasConnection(): Promise<boolean> {
+        const connection = await this.getConnection()
+        return Boolean(connection?.spaceUrl && (
+            connection.method === 'api-key' ? connection.apiKey : connection.accessToken
+        ))
+    }
 }
