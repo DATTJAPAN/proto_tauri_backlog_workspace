@@ -9,8 +9,8 @@ import {
   ShieldCheckIcon,
 } from 'lucide-react'
 
-import {backlog} from '@/backlog/backlog'
-import {type BacklogAuthMethod, type BacklogConnection} from '@/backlog/auth'
+import {backlog} from '@/backlog/Backlog'
+import {type BacklogAuthMethod, type BacklogConnection} from '@/backlog/BacklogAuthentication'
 import {Button} from '@/components/ui/button'
 import {Input} from '@/components/ui/input'
 import {Separator} from '@/components/ui/separator'

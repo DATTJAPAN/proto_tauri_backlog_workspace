@@ -1,5 +1,5 @@
 import {BacklogEvent} from './event/BacklogEvent'
-import {StrongholdStorage} from './tauri/stronghold'
+import {StrongholdStorage} from './tauri/StrongholdStorage'
 
 export type BacklogAuthMethod = 'api-key' | 'oauth'
 

@@ -4,7 +4,7 @@ import {CheckCircle2Icon, EyeIcon, EyeOffIcon, KeyRoundIcon} from 'lucide-react'
 
 import {Button} from '@/components/ui/button'
 import {Input} from '@/components/ui/input'
-import {backlog} from '@/backlog/backlog'
+import {backlog} from '@/backlog/Backlog'
 
 type ConnectionStatus = {
   connected: boolean

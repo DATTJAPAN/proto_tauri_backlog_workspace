@@ -7,8 +7,8 @@ import {
   SidebarContent,
   SidebarHeader,
 } from "@/components/ui/sidebar"
-import {backlog} from '@/backlog/backlog'
-import type {BacklogUser} from '@/backlog/user'
+import {backlog} from '@/backlog/Backlog'
+import type {BacklogUser} from '@/backlog/BacklogUsers'
 
 export function SidebarRight({
   ...props

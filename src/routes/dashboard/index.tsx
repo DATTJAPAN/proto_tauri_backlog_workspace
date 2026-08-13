@@ -4,7 +4,7 @@ import {Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage} from '@/comp
 import {Separator} from '@/components/ui/separator'
 import {SidebarTrigger} from '@/components/ui/sidebar'
 import {AppShell} from '@/layout/shell/app-shell'
-import {backlog} from '@/backlog/backlog'
+import {backlog} from '@/backlog/Backlog'
 
 export const Route = createFileRoute('/dashboard/')({
   beforeLoad: async () => {

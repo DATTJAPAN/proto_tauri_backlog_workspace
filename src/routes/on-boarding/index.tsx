@@ -5,10 +5,10 @@ import {InfoIcon, ShieldCheckIcon} from 'lucide-react'
 import {Button} from '@/components/ui/button'
 import {Input} from '@/components/ui/input'
 import {EmptyShell} from '@/layout/shell/empty-shell'
-import {backlog} from '@/backlog/backlog'
+import {backlog} from '@/backlog/Backlog'
 import {_oauthForm} from "@/routes/on-boarding/_component/_oauth-form.tsx";
 import {_apiKeyForm} from "@/routes/on-boarding/_component/_api-key-form.tsx";
-import {BacklogAuthMethod} from "@/backlog/auth.ts";
+import {BacklogAuthMethod} from "@/backlog/BacklogAuthentication.ts";
 
 export const Route = createFileRoute('/on-boarding/')({
     beforeLoad: async () => {

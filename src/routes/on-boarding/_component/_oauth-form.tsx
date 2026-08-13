@@ -5,7 +5,7 @@ import {openUrl} from '@tauri-apps/plugin-opener'
 import {CheckCircle2Icon, ExternalLinkIcon, LoaderCircleIcon, ShieldCheckIcon} from 'lucide-react'
 
 import {Button} from '@/components/ui/button'
-import {backlog} from '@/backlog/backlog'
+import {backlog} from '@/backlog/Backlog'
 
 type OAuthCallback = { code: string; state?: string }
 type AuthorizationRequest = { authorizationUrl: string }

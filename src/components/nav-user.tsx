@@ -3,8 +3,8 @@ import {Link, useNavigate, useRouter} from '@tanstack/react-router'
 import {openUrl} from '@tauri-apps/plugin-opener'
 import {ChevronsUpDownIcon, ExternalLinkIcon, LoaderCircleIcon, LogOutIcon, SettingsIcon, ShieldCheckIcon} from 'lucide-react'
 
-import {backlog} from '@/backlog/backlog'
-import type {BacklogUser} from '@/backlog/user'
+import {backlog} from '@/backlog/Backlog'
+import type {BacklogUser} from '@/backlog/BacklogUsers'
 import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar'
 import {
   DropdownMenu,

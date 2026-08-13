@@ -1,8 +1,8 @@
 import {useEffect, useState} from 'react'
 import {ArchiveIcon, CheckIcon, ChevronDownIcon, FolderKanbanIcon, LoaderCircleIcon} from 'lucide-react'
 
-import {backlog} from '@/backlog/backlog'
-import type {BacklogProject} from '@/backlog/project'
+import {backlog} from '@/backlog/Backlog'
+import type {BacklogProject} from '@/backlog/BacklogProjects'
 import {
     DropdownMenu,
     DropdownMenuContent,

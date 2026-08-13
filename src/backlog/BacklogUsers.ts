@@ -1,6 +1,6 @@
 import {invoke} from '@tauri-apps/api/core'
 
-import type {BacklogAuthentication} from './auth'
+import type {BacklogAuthentication} from './BacklogAuthentication'
 
 export type BacklogUser = {
     id: number

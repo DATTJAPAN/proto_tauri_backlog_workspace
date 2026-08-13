@@ -1,7 +1,7 @@
-import {BacklogAuthentication, type BacklogConnection} from './auth'
-import {StrongholdStorage} from './tauri/stronghold'
-import {BacklogProjects} from './project'
-import {BacklogUsers} from './user'
+import {BacklogAuthentication, type BacklogConnection} from './BacklogAuthentication'
+import {StrongholdStorage} from './tauri/StrongholdStorage'
+import {BacklogProjects} from './BacklogProjects'
+import {BacklogUsers} from './BacklogUsers'
 
 export class Backlog {
     private readonly _authentication: BacklogAuthentication

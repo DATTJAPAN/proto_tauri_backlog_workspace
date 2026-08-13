@@ -6,8 +6,8 @@ import {HomeIcon, ShieldCheckIcon} from 'lucide-react'
 import {NavMain} from "@/components/nav-main"
 import {NavSecondary} from "@/components/nav-secondary"
 import {ProjectSwitcher} from "@/components/project-switcher"
-import {backlog} from '@/backlog/backlog'
-import type {BacklogProject} from '@/backlog/project'
+import {backlog} from '@/backlog/Backlog'
+import type {BacklogProject} from '@/backlog/BacklogProjects'
 import {
     Sidebar,
     SidebarContent,
