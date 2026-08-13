@@ -1,11 +1,19 @@
-import {createFileRoute} from '@tanstack/react-router'
+import {createFileRoute, redirect} from '@tanstack/react-router'
 
 import {Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage} from '@/components/ui/breadcrumb'
 import {Separator} from '@/components/ui/separator'
 import {SidebarTrigger} from '@/components/ui/sidebar'
 import {AppShell} from '@/layout/shell/app-shell'
+import {backlog} from '@/backlog/backlog'
 
-export const Route = createFileRoute('/dashboard')({component: DashboardPage})
+export const Route = createFileRoute('/dashboard/')({
+  beforeLoad: () => {
+    if (!backlog.isConnected()) {
+      throw redirect({to: '/on-boarding'})
+    }
+  },
+  component: DashboardPage,
+})
 
 function DashboardPage() {
   return (
