@@ -1,61 +1,54 @@
-use serde::{Deserialize, Serialize};
-use serde_json::Value;
-
 use crate::backlog::oauth::validate_space_url;
-use crate::backlog::project_issue_attachment::BacklogProjectIssueAttachmentStruct;
-use crate::backlog::project_issue_named_resource::BacklogProjectIssueNamedResourceStruct;
-use crate::backlog::project_issue_type::BacklogProjectIssueTypeStruct;
-use crate::backlog::project_issue_version::BacklogProjectIssueVersionStruct;
-use crate::backlog::project_status::BacklogProjectStatusStruct;
-use crate::backlog::user::BacklogUserStruct;
+use crate::backlog::project_issue_count::BacklogProjectIssueCountStruct;
+use crate::backlog::project_issue_model::BacklogProjectIssueStruct;
 use crate::http_request::{get, HttpGetOptions};
+use url::Url;
 
-#[derive(Deserialize, Serialize)]
-#[serde(rename_all = "camelCase")]
-pub struct BacklogProjectIssueCountStruct {
-    count: u64,
+pub(crate) fn backlog_project_issue_resource_url(
+    space_url: &str,
+    issue_id_or_key: &str,
+    resource_segments: &[&str],
+) -> Result<Url, String> {
+    let issue_id_or_key = issue_id_or_key.trim();
+    if issue_id_or_key.is_empty() {
+        return Err("Issue ID or key is required".to_string());
+    }
+
+    let mut issue_url = validate_space_url(space_url)?;
+    issue_url.set_path("/api/v2/issues/");
+    issue_url.set_query(None);
+    issue_url.set_fragment(None);
+    let mut segments = issue_url
+        .path_segments_mut()
+        .map_err(|_| "Backlog space URL cannot be used for an issue request".to_string())?;
+    segments.pop_if_empty().push(issue_id_or_key);
+    for segment in resource_segments {
+        segments.push(segment);
+    }
+    drop(segments);
+
+    Ok(issue_url)
 }
 
-#[derive(Deserialize, Serialize)]
-#[serde(rename_all = "camelCase")]
-pub struct BacklogProjectIssueStruct {
-    id: u64,
-    project_id: u64,
-    issue_key: String,
-    key_id: u64,
-    issue_type: BacklogProjectIssueTypeStruct,
-    summary: String,
-    #[serde(default)]
-    description: Option<String>,
-    resolution: Option<BacklogProjectIssueNamedResourceStruct>,
-    priority: BacklogProjectIssueNamedResourceStruct,
-    status: BacklogProjectStatusStruct,
-    assignee: Option<BacklogUserStruct>,
-    #[serde(default)]
-    category: Vec<BacklogProjectIssueNamedResourceStruct>,
-    #[serde(default)]
-    versions: Vec<BacklogProjectIssueVersionStruct>,
-    #[serde(default)]
-    milestone: Vec<BacklogProjectIssueVersionStruct>,
-    start_date: Option<String>,
-    due_date: Option<String>,
-    estimated_hours: Option<f64>,
-    actual_hours: Option<f64>,
-    parent_issue_id: Option<u64>,
-    created_user: Option<BacklogUserStruct>,
-    created: String,
-    updated_user: Option<BacklogUserStruct>,
-    updated: String,
-    #[serde(default)]
-    custom_fields: Vec<Value>,
-    #[serde(default)]
-    attachments: Vec<BacklogProjectIssueAttachmentStruct>,
-    #[serde(default)]
-    shared_files: Vec<Value>,
-    #[serde(default)]
-    external_file_links: Vec<Value>,
-    #[serde(default)]
-    stars: Vec<Value>,
+/// Returns a single issue by its numeric ID or issue key.
+#[tauri::command]
+pub async fn backlog_project_issue_get(
+    space_url: String,
+    issue_id_or_key: String,
+    api_key: Option<String>,
+    access_token: Option<String>,
+) -> Result<BacklogProjectIssueStruct, String> {
+    let issue_url = backlog_project_issue_resource_url(&space_url, &issue_id_or_key, &[])?;
+
+    get(
+        issue_url,
+        HttpGetOptions {
+            query_string: Vec::new(),
+            api_key,
+            access_token,
+        },
+    )
+    .await
 }
 
 /// Returns issues belonging to a project visible to the connected user.

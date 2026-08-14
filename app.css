@@ -1,12 +1,7 @@
-
 @import 'tailwindcss';
-
+@import "./typeset.css";
 @import 'tw-animate-css';
-
-@import "tw-animate-css";
-
 @import "shadcn/tailwind.css";
-
 @import "@fontsource-variable/jetbrains-mono";
 
 @custom-variant dark (&:is(.dark *));
@@ -148,7 +143,7 @@
     }
 
     button:not(:disabled), [role="button"]:not(:disabled) {
-    cursor: pointer;
+        cursor: pointer;
     }
 
     html {
@@ -160,7 +155,7 @@
    provides its own visibility toggle so duplicate controls are not displayed. */
 .hide-native-password-toggle::-ms-reveal,
 .hide-native-password-toggle::-ms-clear {
-  display: none;
+    display: none;
 }
 
 @theme inline {
@@ -205,4 +200,118 @@
     --radius-3xl: calc(var(--radius) * 2.2);
     --radius-4xl: calc(var(--radius) * 2.6);
     --font-mono: 'JetBrains Mono Variable', monospace;
+}
+
+.typeset-docs {
+    --typeset-size: 15px;
+    --typeset-leading: 1.75;
+    --typeset-flow: 1.25em;
+}
+
+.typeset-compact {
+    --typeset-size: 14px;
+    --typeset-leading: 1.6;
+    --typeset-flow: 1em;
+}
+
+.typeset-jetbrains-mono {
+    --typeset-font-body: var(--font-mono);
+    --typeset-font-heading: var(--font-mono);
+    --typeset-font-mono: var(--font-mono);
+}
+
+/* Issue descriptions use a distinct semantic palette on top of the base
+   shadcn Typeset rhythm. The doubled class intentionally outranks the
+   element colors supplied by typeset.css. */
+.typeset.typeset-issue h1 {
+    color: var(--color-orange-800);
+}
+
+.typeset.typeset-issue h2 {
+    color: var(--color-orange-700);
+}
+
+.typeset.typeset-issue h3 {
+    color: var(--color-amber-700);
+}
+
+.typeset.typeset-issue h4,
+.typeset.typeset-issue h5,
+.typeset.typeset-issue h6 {
+    color: var(--color-amber-600);
+}
+
+.typeset.typeset-issue a {
+    color: var(--color-blue-600);
+}
+
+.typeset.typeset-issue a[data-mention] {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid color-mix(in oklab, var(--color-orange-500) 35%, transparent);
+    background-color: color-mix(in oklab, var(--color-orange-100) 70%, transparent);
+    color: var(--color-orange-800);
+    padding-inline: 0.35em;
+    border-radius: 0.25rem;
+    font-weight: 600;
+    text-decoration: none;
+
+}
+
+.typeset.typeset-issue a[data-mention]:hover {
+    border-color: var(--color-orange-500);
+    background-color: var(--color-orange-200);
+}
+
+.typeset.typeset-issue li::marker {
+    color: var(--color-orange-500);
+}
+
+.typeset.typeset-issue blockquote {
+    border-inline-start-color: var(--color-orange-500);
+    background-color: color-mix(in oklab, var(--color-orange-50) 70%, transparent);
+    padding-block: 0.5rem;
+    padding-inline-end: 1rem;
+}
+
+.typeset.typeset-issue :not(pre) > code {
+    color: var(--color-orange-700);
+}
+
+.dark .typeset.typeset-issue h1 {
+    color: var(--color-orange-200);
+}
+
+.dark .typeset.typeset-issue h2 {
+    color: var(--color-orange-300);
+}
+
+.dark .typeset.typeset-issue h3 {
+    color: var(--color-amber-300);
+}
+
+.dark .typeset.typeset-issue h4,
+.dark .typeset.typeset-issue h5,
+.dark .typeset.typeset-issue h6,
+.dark .typeset.typeset-issue :not(pre) > code {
+    color: var(--color-amber-400);
+}
+
+.dark .typeset.typeset-issue a {
+    color: var(--color-blue-400);
+}
+
+.dark .typeset.typeset-issue a[data-mention] {
+    border-color: color-mix(in oklab, var(--color-orange-400) 45%, transparent);
+    background-color: color-mix(in oklab, var(--color-orange-950) 60%, transparent);
+    color: var(--color-orange-200);
+}
+
+.dark .typeset.typeset-issue a[data-mention]:hover {
+    border-color: var(--color-orange-400);
+    background-color: var(--color-orange-950);
+}
+
+.dark .typeset.typeset-issue blockquote {
+    background-color: color-mix(in oklab, var(--color-orange-950) 25%, transparent);
 }

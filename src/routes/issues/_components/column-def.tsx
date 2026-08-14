@@ -1,4 +1,5 @@
 import type {ColumnDef} from '@tanstack/react-table'
+import {Link} from '@tanstack/react-router'
 import {ArrowRightIcon, CheckCircle2Icon, CircleIcon, FlagIcon} from 'lucide-react'
 
 import type {BacklogProjectIssue} from '@/backlog/BacklogProjectIssues'
@@ -16,13 +17,21 @@ export const issueColumns: ColumnDef<DataTableFeatures, BacklogProjectIssue, unk
     {
         id: 'issueKey', accessorKey: 'issueKey', size: 120,
         header: ({column}) => <DataTableColumnHeader column={column} title="Key"/>,
-        cell: ({row}) => <span
-            className="whitespace-nowrap font-mono text-xs font-medium">{row.original.issueKey}</span>,
+        cell: ({row}) => <Link
+            to="/issues/$issueIdOrKey"
+            params={{issueIdOrKey: row.original.issueKey}}
+            className="whitespace-nowrap font-mono text-xs font-medium underline-offset-4 hover:underline"
+        >{row.original.issueKey}</Link>,
     },
     {
         accessorKey: 'summary', size: 360,
         header: ({column}) => <DataTableColumnHeader column={column} title="Summary"/>,
-        cell: ({row}) => <div className="truncate" title={row.original.summary}>{row.original.summary}</div>,
+        cell: ({row}) => <Link
+            to="/issues/$issueIdOrKey"
+            params={{issueIdOrKey: row.original.issueKey}}
+            className="block truncate underline-offset-4 hover:underline"
+            title={row.original.summary}
+        >{row.original.summary}</Link>,
     },
     {
         id: 'status', size: 150, accessorFn: (issue) => issue.status.name,

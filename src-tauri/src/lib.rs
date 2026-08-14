@@ -116,8 +116,12 @@ pub fn run() {
             backlog::oauth::backlog_connection_status,
             backlog::oauth::backlog_api_key_connection_status,
             backlog::project::backlog_project_list,
+            backlog::project_issue::backlog_project_issue_get,
             backlog::project_issue::backlog_project_issue_list,
             backlog::project_issue::backlog_project_issue_count,
+            backlog::project_issue_attachment::backlog_project_issue_attachment_get,
+            backlog::project_issue_comment::backlog_project_issue_comment_list,
+            backlog::project_issue_comment::backlog_project_issue_comment_count,
             backlog::user::backlog_get_current_user,
         ])
         .run(tauri::generate_context!())
