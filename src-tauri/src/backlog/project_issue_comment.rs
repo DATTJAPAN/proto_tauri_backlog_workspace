@@ -3,13 +3,13 @@ use crate::backlog::project_issue_comment_model::{
     BacklogProjectIssueCommentCountStruct,
     BacklogProjectIssueCommentStruct,
 };
-use crate::http_request::{get, HttpGetOptions};
+use crate::http_request::{get, HttpGetOptions, QueryValue};
 
 #[tauri::command]
 pub async fn backlog_project_issue_comment_list(
     space_url: String,
     issue_id_or_key: String,
-    query_string: Vec<(String, String)>,
+    query_string: Vec<(String, QueryValue)>,
     api_key: Option<String>,
     access_token: Option<String>,
 ) -> Result<Vec<BacklogProjectIssueCommentStruct>, String> {

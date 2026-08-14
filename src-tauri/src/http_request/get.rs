@@ -1,11 +1,29 @@
 use base64::{engine::general_purpose::STANDARD, Engine as _};
 use serde::de::DeserializeOwned;
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 use url::Url;
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum QueryValue {
+    String(String),
+    Bool(bool),
+    Number(i64),
+}
+
+impl std::fmt::Display for QueryValue {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            QueryValue::String(s) => write!(f, "{s}"),
+            QueryValue::Bool(b) => write!(f, "{b}"),
+            QueryValue::Number(n) => write!(f, "{n}"),
+        }
+    }
+}
 
 #[derive(Default)]
 pub struct HttpGetOptions {
-    pub query_string: Vec<(String, String)>,
+    pub query_string: Vec<(String, QueryValue)>,
     pub api_key: Option<String>,
     pub access_token: Option<String>,
 }
@@ -24,7 +42,7 @@ where
     {
         let mut query = url.query_pairs_mut();
         for (key, value) in options.query_string {
-            query.append_pair(normalize_query_key(&key), &value);
+            query.append_pair(normalize_query_key(&key), &value.to_string());
         }
     }
 
@@ -71,7 +89,7 @@ pub async fn get_binary(mut url: Url, options: HttpGetOptions) -> Result<HttpBin
     {
         let mut query = url.query_pairs_mut();
         for (key, value) in options.query_string {
-            query.append_pair(normalize_query_key(&key), &value);
+            query.append_pair(normalize_query_key(&key), &value.to_string());
         }
     }
 
@@ -129,7 +147,7 @@ fn normalize_query_key(key: &str) -> &str {
 
 #[cfg(test)]
 mod tests {
-    use super::normalize_query_key;
+    use super::*;
 
     #[test]
     fn removes_internal_query_prefix() {
@@ -143,5 +161,25 @@ mod tests {
     #[test]
     fn preserves_unprefixed_query_keys() {
         assert_eq!(normalize_query_key("count"), "count");
+    }
+
+    #[test]
+    fn query_value_display_formatting() {
+        assert_eq!(QueryValue::String("open".to_string()).to_string(), "open");
+        assert_eq!(QueryValue::Bool(true).to_string(), "true");
+        assert_eq!(QueryValue::Bool(false).to_string(), "false");
+        assert_eq!(QueryValue::Number(100).to_string(), "100");
+    }
+
+    #[test]
+    fn query_value_deserialization() {
+        let s: QueryValue = serde_json::from_str(r#""asc""#).unwrap();
+        assert_eq!(s.to_string(), "asc");
+
+        let b: QueryValue = serde_json::from_str("true").unwrap();
+        assert_eq!(b.to_string(), "true");
+
+        let n: QueryValue = serde_json::from_str("42").unwrap();
+        assert_eq!(n.to_string(), "42");
     }
 }

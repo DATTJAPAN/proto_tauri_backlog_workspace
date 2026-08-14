@@ -3,18 +3,22 @@ import {StrongholdStorage} from './tauri/StrongholdStorage'
 import {BacklogProjects} from './BacklogProjects'
 import {BacklogUsers} from './BacklogUsers'
 import {BacklogProjectIssues} from './BacklogProjectIssues'
+import {BacklogProjectUsers} from "@/backlog/BacklogProjectUsers.ts";
 
 export class Backlog {
     private readonly _authentication: BacklogAuthentication
-    public readonly projects: BacklogProjects
     public readonly users: BacklogUsers
+    public readonly projects: BacklogProjects
+    public readonly projectUsers: BacklogProjectUsers
     public readonly issues: BacklogProjectIssues
 
     public constructor(authentication: BacklogAuthentication) {
         this._authentication = authentication
-        this.projects = new BacklogProjects(authentication)
         this.users = new BacklogUsers(authentication)
+        this.projects = new BacklogProjects(authentication)
+        this.projectUsers = new BacklogProjectUsers(authentication)
         this.issues = new BacklogProjectIssues(authentication)
+
     }
 
     public async getConnection(): Promise<BacklogConnection | null> {

@@ -11,4 +11,5 @@ pub mod project_issue_named_resource;
 pub mod project_issue_type;
 pub mod project_issue_version;
 pub mod project_status;
+pub mod project_user;
 pub mod user;

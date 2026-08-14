@@ -1,7 +1,7 @@
 use crate::backlog::oauth::validate_space_url;
 use crate::backlog::project_issue_count::BacklogProjectIssueCountStruct;
 use crate::backlog::project_issue_model::BacklogProjectIssueStruct;
-use crate::http_request::{get, HttpGetOptions};
+use crate::http_request::{get, HttpGetOptions, QueryValue};
 use url::Url;
 
 pub(crate) fn backlog_project_issue_resource_url(
@@ -55,7 +55,7 @@ pub async fn backlog_project_issue_get(
 #[tauri::command]
 pub async fn backlog_project_issue_list(
     space_url: String,
-    query_string: Vec<(String, String)>,
+    query_string: Vec<(String, QueryValue)>,
     api_key: Option<String>,
     access_token: Option<String>,
 ) -> Result<Vec<BacklogProjectIssueStruct>, String> {
@@ -78,7 +78,7 @@ pub async fn backlog_project_issue_list(
 #[tauri::command]
 pub async fn backlog_project_issue_count(
     space_url: String,
-    query_string: Vec<(String, String)>,
+    query_string: Vec<(String, QueryValue)>,
     api_key: Option<String>,
     access_token: Option<String>,
 ) -> Result<BacklogProjectIssueCountStruct, String> {

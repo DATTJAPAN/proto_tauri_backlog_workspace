@@ -1,4 +1,5 @@
 import {createFileRoute, redirect} from '@tanstack/react-router'
+import {useMemo} from 'react'
 
 import {backlog} from '@/backlog/Backlog'
 import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card'
@@ -14,14 +15,24 @@ export const Route = createFileRoute('/issues/$issueIdOrKey/')({
     beforeLoad: async () => {
         if (!await backlog.isConnected()) throw redirect({to: '/on-boarding'})
     },
-    loader: ({params}) => backlog.issues.get(params.issueIdOrKey),
+    loader: async ({params}) => {
+        const issue = await backlog.issues.get(params.issueIdOrKey)
+        const projectUsers = await backlog.projectUsers.getAll(issue.projectId, {excludeGroupMembers: false}).catch(() => [])
+        return {issue, projectUsers}
+    },
     pendingComponent: IssuePendingPage,
     errorComponent: IssueErrorPage,
     component: IssuePage,
 })
 
 function IssuePage() {
-    const issue = Route.useLoaderData()
+    const {issue, projectUsers} = Route.useLoaderData()
+
+    // Extract usernames to mention auto-detection
+    const mentionNames = useMemo(() => {
+        console.log(projectUsers)
+        return projectUsers.map((user) => user.name).filter(Boolean)
+    }, [projectUsers])
 
     return (
         <AppShell>
@@ -41,6 +52,7 @@ function IssuePage() {
                                             issueIdOrKey={issue.issueKey}
                                             content={issue.description}
                                             attachments={issue.attachments}
+                                            mentionNames={mentionNames}
                                             className="typeset-issue"
                                         />
                                     ) : (

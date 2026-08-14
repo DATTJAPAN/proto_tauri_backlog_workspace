@@ -1,3 +1,3 @@
 mod get;
 
-pub use get::{get, get_binary, HttpBinaryResponse, HttpGetOptions};
+pub use get::{get, get_binary, HttpBinaryResponse, HttpGetOptions, QueryValue};

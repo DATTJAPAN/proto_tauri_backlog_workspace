@@ -29,14 +29,26 @@ import {Separator} from "@/components/ui/separator.tsx";
 
 const COMMENT_LIMIT = 50
 
+export interface IssueCommentsProps {
+    issueIdOrKey: string
+    attachments: BacklogProjectIssueAttachment[]
+    mentionNames?: string[]
+}
+
+export interface IssueCommentProps {
+    comment: BacklogProjectIssueComment
+    issueIdOrKey: string
+    attachments: BacklogProjectIssueAttachment[]
+    mentionNames?: string[]
+    isMine: boolean
+}
+
 export function IssueComments(
     {
         issueIdOrKey,
         attachments,
-    }: {
-        issueIdOrKey: string
-        attachments: BacklogProjectIssueAttachment[]
-    }) {
+        mentionNames = [],
+    }: IssueCommentsProps) {
     const [comments, setComments] = useState<BacklogProjectIssueComment[]>([])
     const [totalCount, setTotalCount] = useState(0)
     const [currentUserId, setCurrentUserId] = useState<number | null>(null)
@@ -104,43 +116,42 @@ export function IssueComments(
                 </CardTitle>
             </CardHeader>
             <CardContent className="p-0">
-                <ScrollArea className="h-176">
-                    <div className="space-y-4 p-4 pe-6">
-                        {loading && <CommentSkeleton/>}
-                        {!loading && error && (
-                            <div role="alert"
-                                 className="flex items-start gap-2 border border-destructive/40 bg-destructive/5 p-3 text-xs text-destructive">
-                                <AlertCircleIcon className="mt-0.5 size-4 shrink-0"/>
-                                <div><p className="font-medium">Unable to load comments</p><p
-                                    className="mt-1">{error}</p></div>
-                            </div>
-                        )}
-                        {!loading && !error && comments.length === 0 && (
-                            <p className="py-8 text-center text-sm text-muted-foreground">No comments yet.</p>
-                        )}
-                        {!loading && !error && totalCount > comments.length && (
-                            <button
-                                type="button"
-                                className="block w-full border bg-muted/40 px-3 py-2 text-center text-xs text-muted-foreground hover:bg-muted hover:text-foreground disabled:pointer-events-none disabled:opacity-60"
-                                onClick={loadMore}
-                                disabled={loadingMore}
-                            >
-                                {loadingMore
-                                    ? 'Loading more comments…'
-                                    : `Show more comments (showing ${comments.length} of ${totalCount})`}
-                            </button>
-                        )}
-                        {!loading && !error && comments.map((comment) => (
-                            <IssueComment
-                                key={comment.id}
-                                comment={comment}
-                                issueIdOrKey={issueIdOrKey}
-                                attachments={attachments}
-                                isMine={comment.createdUser.id === currentUserId}
-                            />
-                        ))}
-                    </div>
-                </ScrollArea>
+                <div className="space-y-4 p-4 pe-6">
+                    {loading && <CommentSkeleton/>}
+                    {!loading && error && (
+                        <div role="alert"
+                             className="flex items-start gap-2 border border-destructive/40 bg-destructive/5 p-3 text-xs text-destructive">
+                            <AlertCircleIcon className="mt-0.5 size-4 shrink-0"/>
+                            <div><p className="font-medium">Unable to load comments</p><p
+                                className="mt-1">{error}</p></div>
+                        </div>
+                    )}
+                    {!loading && !error && comments.length === 0 && (
+                        <p className="py-8 text-center text-sm text-muted-foreground">No comments yet.</p>
+                    )}
+                    {!loading && !error && totalCount > comments.length && (
+                        <button
+                            type="button"
+                            className="block w-full border bg-muted/40 px-3 py-2 text-center text-xs text-muted-foreground hover:bg-muted hover:text-foreground disabled:pointer-events-none disabled:opacity-60"
+                            onClick={loadMore}
+                            disabled={loadingMore}
+                        >
+                            {loadingMore
+                                ? 'Loading more comments…'
+                                : `Show more comments (showing ${comments.length} of ${totalCount})`}
+                        </button>
+                    )}
+                    {!loading && !error && comments.map((comment) => (
+                        <IssueComment
+                            key={comment.id}
+                            comment={comment}
+                            issueIdOrKey={issueIdOrKey}
+                            attachments={attachments}
+                            mentionNames={mentionNames}
+                            isMine={comment.createdUser.id === currentUserId}
+                        />
+                    ))}
+                </div>
             </CardContent>
         </Card>
     )
@@ -151,25 +162,37 @@ function IssueComment(
         comment,
         issueIdOrKey,
         attachments,
+        mentionNames = [],
         isMine,
-    }: {
-        comment: BacklogProjectIssueComment
-        issueIdOrKey: string
-        attachments: BacklogProjectIssueAttachment[]
-        isMine: boolean
-    }) {
+    }: IssueCommentProps) {
     const mentionUsers = useMemo(() => {
         const users = new Map<number, BacklogUser>()
         comment.notifications.forEach((notification) => users.set(notification.user.id, notification.user))
         return [...users.values()]
     }, [comment.notifications])
 
-    const __renderChangeLog = (comment: BacklogProjectIssueComment) => {
-        const _changeLogLength = h_array_length(comment?.changeLog)
+    const combinedMentionNames = useMemo(() => {
+        const names = new Set<string>([...mentionNames])
+        mentionUsers.forEach((user) => {
+            if (user.name) names.add(user.name)
+        })
+        return [...names]
+    }, [mentionNames, mentionUsers])
 
-        if (!comment || !_changeLogLength || _changeLogLength === 0) {
+    const hasChangeLog = useMemo(() => {
+        const len = h_array_length(comment?.changeLog)
+        return len !== null && len > 0
+    }, [comment?.changeLog])
+
+    const hasContent = useMemo(() => {
+        return Boolean(comment.content?.trim())
+    }, [comment.content])
+
+    const __renderChangeLog = (comment: BacklogProjectIssueComment) => {
+        if (!hasChangeLog) {
             return null
         }
+
         const getFieldIcon = (field: string) => {
             switch (field) {
                 case 'status':
@@ -219,7 +242,6 @@ function IssueComment(
                 return knownTypes[type]
             }
 
-            // Fallback auto-formatter for unknown types (e.g., "issue.multi_update" -> "Issue Multi Update")
             return type
                 .split(/[._-]/)
                 .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
@@ -305,7 +327,7 @@ function IssueComment(
                         )
                     })}
                 </div>
-                <Separator className='mb-5'/>
+                {hasContent && <Separator className="my-2.5"/>}
             </>
         )
     }
@@ -346,17 +368,17 @@ function IssueComment(
             <div className="px-3 py-2.5">
                 {__renderChangeLog(comment)}
 
-                {comment.content?.trim() ? (
+                {hasContent ? (
                     <IssueMarkdown
                         issueIdOrKey={issueIdOrKey}
-                        content={comment.content}
+                        content={comment.content!}
                         attachments={attachments}
-                        mentionNames={mentionUsers.map((user) => user.name)}
+                        mentionNames={combinedMentionNames}
                         className="typeset-issue typeset-compact"
                     />
-                ) : (
+                ) : !hasChangeLog ? (
                     <p className="text-xs italic text-muted-foreground">No comment text.</p>
-                )}
+                ) : null}
             </div>
         </article>
     )

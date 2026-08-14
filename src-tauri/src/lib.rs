@@ -83,7 +83,7 @@ pub fn run() {
 
     tauri::Builder::default()
         // The OAuth callback uses a fixed loopback port, so only one app
-        // process may own it. A second launch focuses the existing window.
+        // process may own it. A second launch focuses on the existing window.
         .plugin(tauri_plugin_single_instance::init(|app, _args, _cwd| {
             if let Some(window) = app.get_webview_window("main") {
                 let _ = window.show();
@@ -122,6 +122,7 @@ pub fn run() {
             backlog::project_issue_attachment::backlog_project_issue_attachment_get,
             backlog::project_issue_comment::backlog_project_issue_comment_list,
             backlog::project_issue_comment::backlog_project_issue_comment_count,
+            backlog::project_user::backlog_project_user_list,
             backlog::user::backlog_get_current_user,
         ])
         .run(tauri::generate_context!())
