@@ -16,6 +16,7 @@ export function IssueTitle({issue}: {issue: BacklogProjectIssue}) {
         adjustment: 'auto',
         basisColor: '#ffffff',
     })
+
     const overdue = !isClosed(issue) && h_datefns_is_overdue({value: issue.dueDate})
 
     return (
@@ -25,7 +26,7 @@ export function IssueTitle({issue}: {issue: BacklogProjectIssue}) {
                 <Badge style={{
                     backgroundColor: typeBackground,
                     borderColor: typeBackground,
-                    color: h_color_contrast({color: typeBackground}),
+                    color: h_color_contrast({color: typeBackground, overrideColor: '#ffffff'}),
                 }}>
                     {issue.issueType.name}
                 </Badge>
@@ -35,7 +36,7 @@ export function IssueTitle({issue}: {issue: BacklogProjectIssue}) {
                     {overdue && <span role="img" aria-label="Overdue" title="Overdue">🔥</span>}
                 </Badge>
             </div>
-            <h1 className="break-words text-2xl font-semibold tracking-tight sm:text-3xl">{issue.summary}</h1>
+            <h1 className="wrap-break-word text-2xl font-semibold tracking-tight sm:text-3xl">{issue.summary}</h1>
             <p className="mt-3 text-xs text-muted-foreground">
                 Created {h_datefns_datetime({value: issue.created})} · Updated {h_datefns_datetime({value: issue.updated})}
             </p>
@@ -82,7 +83,9 @@ export function IssueDetails({issue}: {issue: BacklogProjectIssue}) {
 export function IssuePeople({issue}: {issue: BacklogProjectIssue}) {
     return (
         <Card>
-            <CardHeader className="border-b"><CardTitle>People</CardTitle></CardHeader>
+            <CardHeader className="border-b">
+                <CardTitle>People</CardTitle>
+            </CardHeader>
             <CardContent className="space-y-4">
                 <Person label="Creator" user={issue.createdUser}/>
                 <Person label="Assignee" user={issue.assignee}/>

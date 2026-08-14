@@ -17,10 +17,11 @@ import ReactMarkdown, {type Components} from 'react-markdown'
 import rehypeKatex from 'rehype-katex'
 import rehypeRaw from 'rehype-raw'
 import rehypeSlug from 'rehype-slug'
+import remarkBreaks from 'remark-breaks'
 import remarkEmoji from 'remark-emoji'
 import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
-import type {Link, Parent, PhrasingContent, Root, Text} from 'mdast'
+import type {Parent, PhrasingContent, Root, Text} from 'mdast'
 import type {PluggableList, Plugin} from 'unified'
 import {CheckIcon, CopyIcon, DownloadIcon, ExternalLinkIcon, LinkIcon} from 'lucide-react'
 import {vscDarkPlus} from 'react-syntax-highlighter/dist/esm/styles/prism'
@@ -86,153 +87,158 @@ const DEFAULT_CODE_OPTIONS: Required<MarkdownCodeOptions> = {
     theme: vscDarkPlus,
 }
 
-export const MarkdownRenderer = memo(function MarkdownRenderer({
-                                                                   content,
-                                                                   components,
-                                                                   features,
-                                                                   code,
-                                                                   linkTarget = '_blank',
-                                                                   remarkPlugins: additionalRemarkPlugins = [],
-                                                                   rehypePlugins: additionalRehypePlugins = [],
-                                                                   renderMermaid,
-                                                                   mentionNames = [],
-                                                                   resolveMentionHref,
-                                                                   onMentionClick,
-                                                                   onLinkClick,
-                                                                   onDownloadClick,
-                                                                   className,
-                                                                   ...containerProps
-                                                               }: MarkdownRendererProps) {
-    const enabledFeatures = {...DEFAULT_FEATURES, ...features}
-    const codeOptions = {...DEFAULT_CODE_OPTIONS, ...code}
+export const MarkdownRenderer = memo(
+    function MarkdownRenderer(
+        {
+            content,
+            components,
+            features,
+            code,
+            linkTarget = '_blank',
+            remarkPlugins: additionalRemarkPlugins = [],
+            rehypePlugins: additionalRehypePlugins = [],
+            renderMermaid,
+            mentionNames = [],
+            resolveMentionHref,
+            onMentionClick,
+            onLinkClick,
+            onDownloadClick,
+            className,
+            ...containerProps
+        }: MarkdownRendererProps) {
+        const enabledFeatures = {...DEFAULT_FEATURES, ...features}
+        const codeOptions = {...DEFAULT_CODE_OPTIONS, ...code}
 
-    const remarkPlugins = useMemo<PluggableList>(() => {
-        const plugins: PluggableList = []
-        if (enabledFeatures.gfm) plugins.push(remarkGfm)
-        if (enabledFeatures.math) plugins.push(remarkMath)
-        if (enabledFeatures.emoji) plugins.push([remarkEmoji, {padSpaceAfter: true}])
-        if (enabledFeatures.mentions) {
-            plugins.push([remarkMentions, {names: mentionNames, resolveHref: resolveMentionHref}])
-        }
-        return [...plugins, ...additionalRemarkPlugins]
-    }, [
-        additionalRemarkPlugins,
-        enabledFeatures.emoji,
-        enabledFeatures.gfm,
-        enabledFeatures.math,
-        enabledFeatures.mentions,
-        mentionNames,
-        resolveMentionHref,
-    ])
-
-    const rehypePlugins = useMemo<PluggableList>(() => {
-        const plugins: PluggableList = []
-        if (enabledFeatures.rawHtml) plugins.push(rehypeRaw)
-        if (enabledFeatures.headingIds) plugins.push(rehypeSlug)
-        if (enabledFeatures.math) plugins.push(rehypeKatex)
-        return [...plugins, ...additionalRehypePlugins]
-    }, [enabledFeatures.headingIds, enabledFeatures.math, enabledFeatures.rawHtml, additionalRehypePlugins])
-
-    const markdownComponents = useMemo<Components>(() => ({
-        pre: ({children}) => {
-            const codeElement = Array.isArray(children) ? children[0] : children
-            if (!isValidElement(codeElement)) return <pre>{children}</pre>
-
-            const codeProps = (codeElement as ReactElement<{
-                className?: string
-                children?: ReactNode
-            }>).props
-            const language = LANGUAGE_CLASS.exec(codeProps.className ?? '')?.[1] ?? 'text'
-            const source = getTextContent(codeProps.children).replace(/\n$/, '')
-
-            if (language.toLowerCase() === 'mermaid' && enabledFeatures.mermaid && renderMermaid) {
-                return <>{renderMermaid(source)}</>
+        const remarkPlugins = useMemo<PluggableList>(() => {
+            const plugins: PluggableList = [remarkBreaks]
+            if (enabledFeatures.gfm) plugins.push(remarkGfm)
+            if (enabledFeatures.math) plugins.push(remarkMath)
+            if (enabledFeatures.emoji) plugins.push([remarkEmoji, {padSpaceAfter: true}])
+            if (enabledFeatures.mentions) {
+                plugins.push([remarkMentions, {names: mentionNames, resolveHref: resolveMentionHref}])
             }
+            return [...plugins, ...additionalRemarkPlugins]
+        }, [
+            additionalRemarkPlugins,
+            enabledFeatures.emoji,
+            enabledFeatures.gfm,
+            enabledFeatures.math,
+            enabledFeatures.mentions,
+            mentionNames,
+            resolveMentionHref,
+        ])
 
-            return (
-                <MarkdownCodeBlock
-                    source={source}
-                    language={language}
-                    options={codeOptions}
-                />
-            )
-        },
-        code: ({className: codeClassName, children, ...props}) => (
-            <code className={codeClassName} {...props}>{children}</code>
-        ),
-        a: ({href = '', children, ...props}) => {
-            const mentionName = (props as { 'data-mention'?: unknown })['data-mention']
-            const isMention = typeof mentionName === 'string'
-            const isDownload = DOWNLOAD_EXTENSION.test(href)
-            const isExternal = /^(?:https?:)?\/\//i.test(href)
-            const isAnchor = href.startsWith('#')
-            const target = isAnchor ? '_self' : isExternal ? '_blank' : linkTarget
+        const rehypePlugins = useMemo<PluggableList>(() => {
+            const plugins: PluggableList = []
+            if (enabledFeatures.rawHtml) plugins.push(rehypeRaw)
+            if (enabledFeatures.headingIds) plugins.push(rehypeSlug)
+            if (enabledFeatures.math) plugins.push(rehypeKatex)
+            return [...plugins, ...additionalRehypePlugins]
+        }, [enabledFeatures.headingIds, enabledFeatures.math, enabledFeatures.rawHtml, additionalRehypePlugins])
 
-            const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
-                if (isMention) {
-                    if (href === '#') event.preventDefault()
-                    onMentionClick?.(mentionName, event)
-                } else if (isDownload && onDownloadClick) {
-                    event.preventDefault()
-                    onDownloadClick(href, getFilename(href), event)
-                } else if (isAnchor) {
-                    scrollToAnchor(href, event)
+        const markdownComponents = useMemo<Components>(() => ({
+            pre: ({children}) => {
+                const codeElement = Array.isArray(children) ? children[0] : children
+                if (!isValidElement(codeElement)) return <pre>{children}</pre>
+
+                const codeProps = (codeElement as ReactElement<{
+                    className?: string
+                    children?: ReactNode
+                }>).props
+                const language = LANGUAGE_CLASS.exec(codeProps.className ?? '')?.[1] ?? 'text'
+                const source = getTextContent(codeProps.children).replace(/\n$/, '')
+
+                if (language.toLowerCase() === 'mermaid' && enabledFeatures.mermaid && renderMermaid) {
+                    return <>{renderMermaid(source)}</>
                 }
-                onLinkClick?.(href, event)
-            }
 
-            return (
-                <a
-                    href={href}
-                    target={target}
-                    rel={target === '_blank' ? 'noreferrer noopener' : undefined}
-                    onClick={handleClick}
-                    title={isMention ? `Mention: @${mentionName}` : undefined}
-                    {...props}
-                >
-                    {children}
+                return (
+                    <MarkdownCodeBlock
+                        source={source}
+                        language={language}
+                        options={codeOptions}
+                    />
+                )
+            },
+            code: ({className: codeClassName, children, ...props}) => (
+                <code className={codeClassName} {...props}>{children}</code>
+            ),
+            a: ({href = '', children, ...props}) => {
+                const mentionName = (props as { 'data-mention'?: unknown })['data-mention']
+                const isMention = typeof mentionName === 'string'
+                const isDownload = DOWNLOAD_EXTENSION.test(href)
+                const isExternal = /^(?:https?:)?\/\//i.test(href)
+                const isAnchor = href.startsWith('#')
+                const target = isAnchor ? '_self' : isExternal ? '_blank' : linkTarget
 
-                    {isDownload && <DownloadIcon className="size-4" data-icon="inline-end" aria-hidden="true"/>}
-                    {!isDownload && isExternal &&
-                        <ExternalLinkIcon className="size-4" data-icon="inline-end" aria-hidden="true"/>}
-                    {isAnchor && !isMention && <LinkIcon className="size-4" data-icon="inline-end" aria-hidden="true"/>}
+                const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
+                    if (isMention) {
+                        if (href === '#') event.preventDefault()
+                        onMentionClick?.(mentionName, event)
+                    } else if (isDownload && onDownloadClick) {
+                        event.preventDefault()
+                        onDownloadClick(href, getFilename(href), event)
+                    } else if (isAnchor) {
+                        scrollToAnchor(href, event)
+                    }
+                    onLinkClick?.(href, event)
+                }
 
+                return (
+                    <a
+                        href={href}
+                        target={target}
+                        rel={target === '_blank' ? 'noreferrer noopener' : undefined}
+                        onClick={handleClick}
+                        title={isMention ? `Mention: @${mentionName}` : undefined}
+                        {...props}
+                    >
+                        <span className="inline-flex items-center gap-1 leading-none">
+                            {children}
 
-                </a>
-            )
-        },
-        table: ({children, ...props}) => (
-            <div className="typeset-scroll">
-                <table {...props}>{children}</table>
-            </div>
-        ),
-        ...components,
-    }), [
-        codeOptions,
-        components,
-        enabledFeatures.mermaid,
-        linkTarget,
-        onDownloadClick,
-        onLinkClick,
-        onMentionClick,
-        renderMermaid,
-    ])
+                            {isDownload &&
+                                <DownloadIcon className="size-4 shrink-0" data-icon="inline-end" aria-hidden="true"/>}
+                            {!isDownload && isExternal &&
+                                <ExternalLinkIcon className="size-4 shrink-0" data-icon="inline-end"
+                                                  aria-hidden="true"/>}
+                            {isAnchor && !isMention &&
+                                <LinkIcon className="size-4 shrink-0" data-icon="inline-end" aria-hidden="true"/>}
+                        </span>
+                    </a>
+                )
+            },
+            table: ({children, ...props}) => (
+                <div className="typeset-scroll">
+                    <table {...props}>{children}</table>
+                </div>
+            ),
+            ...components,
+        }), [
+            codeOptions,
+            components,
+            enabledFeatures.mermaid,
+            linkTarget,
+            onDownloadClick,
+            onLinkClick,
+            onMentionClick,
+            renderMermaid,
+        ])
 
-    return (
-        <div
-            {...containerProps}
-            className={cn('typeset typeset-docs typeset-jetbrains-mono max-w-none', className)}
-        >
-            <ReactMarkdown
-                remarkPlugins={remarkPlugins}
-                rehypePlugins={rehypePlugins}
-                components={markdownComponents}
+        return (
+            <div
+                {...containerProps}
+                className={cn('typeset typeset-docs typeset-jetbrains-mono max-w-none', className)}
             >
-                {content}
-            </ReactMarkdown>
-        </div>
-    )
-})
+                <ReactMarkdown
+                    remarkPlugins={remarkPlugins}
+                    rehypePlugins={rehypePlugins}
+                    components={markdownComponents}
+                >
+                    {content}
+                </ReactMarkdown>
+            </div>
+        )
+    })
 
 type RemarkMentionOptions = {
     names?: string[]
@@ -240,82 +246,83 @@ type RemarkMentionOptions = {
 }
 
 const remarkMentions: Plugin<[RemarkMentionOptions?], Root> = (options = {}) => (tree) => {
-    transformMentionChildren(tree, options)
-}
+    const knownNames = [...new Set(options.names ?? [])]
+        .filter(Boolean)
+        .sort((left, right) => right.length - left.length)
 
-function transformMentionChildren(parent: Parent, options: RemarkMentionOptions) {
-    parent.children = parent.children.flatMap<(typeof parent.children)[number]>((child) => {
-        if (child.type === 'link' || child.type === 'linkReference' || child.type === 'code' || child.type === 'inlineCode') {
+    if (knownNames.length === 0) return
+
+    const pattern = new RegExp(`@(${knownNames.map(escapeRegularExpression).join('|')})`, 'g')
+
+    function walk(parent: Parent) {
+        parent.children = parent.children.flatMap<(typeof parent.children)[number]>((child) => {
+            if (
+                child.type === 'link' ||
+                child.type === 'linkReference' ||
+                child.type === 'code' ||
+                child.type === 'inlineCode'
+            ) {
+                return child
+            }
+
+            if (child.type === 'text') {
+                const text = child.value
+                const nodes: PhrasingContent[] = []
+                let cursor = 0
+                pattern.lastIndex = 0
+
+                for (const match of text.matchAll(pattern)) {
+                    const start = match.index
+                    const fullMention = match[0]
+                    const name = match[1]
+
+                    if (start > cursor) {
+                        nodes.push({type: 'text', value: text.slice(cursor, start)})
+                    }
+
+                    nodes.push({
+                        type: 'link',
+                        url: options.resolveHref?.(name) ?? '#',
+                        title: `Mention: @${name}`,
+                        children: [{type: 'text', value: fullMention}],
+                        data: {hProperties: {'data-mention': name}},
+                    })
+
+                    cursor = start + fullMention.length
+                }
+
+                if (cursor < text.length) {
+                    nodes.push({type: 'text', value: text.slice(cursor)})
+                }
+
+                return (nodes.length > 0 ? nodes : [child]) as (typeof parent.children)[number][]
+            }
+
+            if ('children' in child && Array.isArray((child as Parent).children)) {
+                walk(child as Parent)
+            }
+
             return child
-        }
-
-        if (child.type === 'text') {
-            return parseMentionText(child, options) as (typeof parent.children)[number][]
-        }
-        if ('children' in child) transformMentionChildren(child as Parent, options)
-        return child
-    })
-}
-
-function parseMentionText(node: Text, options: RemarkMentionOptions): PhrasingContent[] {
-    const result: PhrasingContent[] = []
-    const lines = node.value.split(/(\r?\n)/)
-
-    for (const line of lines) {
-        if (/^\r?\n$/.test(line)) {
-            result.push({type: 'text', value: line})
-            continue
-        }
-
-        const standaloneMentionLine = /^\s*@/.test(line)
-        const knownNames = [...new Set(options.names ?? [])]
-            .filter(Boolean)
-            .sort((left, right) => right.length - left.length)
-            .map(escapeRegularExpression)
-        const pattern = standaloneMentionLine
-            ? /@([^@\r\n]+?)(?=\s+@|\s*$)/g
-            : new RegExp(`@(?:${knownNames.length > 0 ? `${knownNames.join('|')}|` : ''}[\\p{L}\\p{N}._-]+)`, 'gu')
-        let cursor = 0
-
-        for (const match of line.matchAll(pattern)) {
-            const start = match.index
-            if (start > cursor) result.push({type: 'text', value: line.slice(cursor, start)})
-
-            const label = match[0].trimEnd()
-            const name = standaloneMentionLine ? match[1].trim() : label.slice(1)
-            result.push(createMentionLink(name, label, options))
-            cursor = start + label.length
-        }
-
-        if (cursor < line.length) result.push({type: 'text', value: line.slice(cursor)})
+        })
     }
 
-    return result.length > 0 ? result : [node]
+    walk(tree)
 }
 
 function escapeRegularExpression(value: string): string {
     return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 }
 
-function createMentionLink(name: string, label: string, options: RemarkMentionOptions): Link {
-    return {
-        type: 'link',
-        url: options.resolveHref?.(name) ?? '#',
-        title: `Mention: @${name}`,
-        children: [{type: 'text', value: label}],
-        data: {hProperties: {'data-mention': name}},
-    }
-}
-
-function MarkdownCodeBlock({
-                               source,
-                               language,
-                               options,
-                           }: {
-    source: string
-    language: string
-    options: Required<MarkdownCodeOptions>
-}) {
+function MarkdownCodeBlock(
+    {
+        source,
+        language,
+        options,
+    }: {
+        source: string
+        language: string
+        options: Required<MarkdownCodeOptions>
+    }) {
     const [copied, setCopied] = useState(false)
     const resetTimer = useRef<number | undefined>(undefined)
 

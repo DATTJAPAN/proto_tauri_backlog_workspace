@@ -3,13 +3,39 @@ import {invoke} from '@tauri-apps/api/core'
 import type {BacklogAuthentication} from './BacklogAuthentication'
 import type {BacklogUser} from './BacklogUsers'
 
+export type BacklogProjectIssueCommentChangeLogAttachmentInfo = {
+    id: number
+    name: string
+}
+
+export type BacklogProjectIssueCommentChangeLogAttributeInfo = {
+    id?: number
+    name?: string
+    [key: string]: unknown
+}
+
+export type BacklogProjectIssueCommentChangeLogNotificationInfo = {
+    type: string
+}
+
+export type BacklogProjectIssueCommentChangeLogField =
+    | 'status'
+    | 'assigner'
+    | 'attachment'
+    | 'startDate'
+    | 'limitDate'
+    | 'description'
+    | 'component'
+    | 'notification'
+    | string
+
 export type BacklogProjectIssueCommentChangeLog = {
-    field: string;
-    newValue: string | null;
-    originalValue: string | null;
-    attachmentInfo: Record<string, unknown> | null;
-    attributeInfo: Record<string, unknown> | null;
-    notificationInfo: Record<string, unknown> | null;
+    field: BacklogProjectIssueCommentChangeLogField
+    newValue: string | null
+    originalValue: string | null
+    attachmentInfo: BacklogProjectIssueCommentChangeLogAttachmentInfo | null
+    attributeInfo: BacklogProjectIssueCommentChangeLogAttributeInfo | null
+    notificationInfo: BacklogProjectIssueCommentChangeLogNotificationInfo | null
 }
 
 export type BacklogProjectIssueCommentNotification = {

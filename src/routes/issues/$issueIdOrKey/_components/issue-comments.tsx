@@ -1,5 +1,16 @@
 import {useEffect, useMemo, useState} from 'react'
-import {AlertCircleIcon, ArrowRight, BellIcon, MessageSquareIcon} from 'lucide-react'
+import {
+    ActivityIcon,
+    AlertCircleIcon,
+    ArrowRight,
+    BellIcon,
+    CalendarIcon,
+    FileTextIcon,
+    MessageSquareIcon,
+    PaperclipIcon,
+    TagIcon,
+    UserCheckIcon,
+} from 'lucide-react'
 
 import {backlog} from '@/backlog/Backlog'
 import type {BacklogProjectIssueComment} from '@/backlog/BacklogProjectIssueComments'
@@ -14,6 +25,7 @@ import {cn} from '@/lib/utils'
 import {IssueMarkdown} from './issue-markdown'
 import {h_array_length} from "@/helper/array.ts";
 import {Badge} from "@/components/ui/badge.tsx";
+import {Separator} from "@/components/ui/separator.tsx";
 
 const COMMENT_LIMIT = 100
 
@@ -120,42 +132,150 @@ function IssueComment(
         return [...users.values()]
     }, [comment.notifications])
 
-
     const __renderChangeLog = (comment: BacklogProjectIssueComment) => {
         const _changeLogLength = h_array_length(comment?.changeLog)
 
-        if (comment && _changeLogLength !== null && _changeLogLength > 0) {
-            return (
-                <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground my-1.5">
-                    <span>Changed status:</span>
-                    {comment?.changeLog?.map((log, index) => (
-                        <span key={index} className="inline-flex items-center gap-1.5">
-                                {log.originalValue && (
+        if (!comment || !_changeLogLength || _changeLogLength === 0) {
+            return null
+        }
+        const getFieldIcon = (field: string) => {
+            switch (field) {
+                case 'status':
+                    return <ActivityIcon className="size-3.5 text-blue-500 shrink-0"/>
+                case 'attachment':
+                    return <PaperclipIcon className="size-3.5 text-amber-500 shrink-0"/>
+                case 'assigner':
+                    return <UserCheckIcon className="size-3.5 text-emerald-500 shrink-0"/>
+                case 'startDate':
+                case 'limitDate':
+                    return <CalendarIcon className="size-3.5 text-purple-500 shrink-0"/>
+                case 'notification':
+                    return <BellIcon className="size-3.5 text-rose-500 shrink-0"/>
+                case 'description':
+                    return <FileTextIcon className="size-3.5 text-slate-500 shrink-0"/>
+                default:
+                    return <TagIcon className="size-3.5 text-muted-foreground shrink-0"/>
+            }
+        }
+
+        const getFieldLabel = (field: string): string => {
+            const labels: Record<string, string> = {
+                status: 'Status',
+                assigner: 'Assignee',
+                attachment: 'Attachment',
+                startDate: 'Start Date',
+                limitDate: 'Due Date',
+                description: 'Description',
+                component: 'Component',
+                notification: 'Notification',
+            }
+            return labels[field] || field
+        }
+
+        // Notification type formatter
+        const formatNotificationType = (type?: string): string => {
+            if (!type) return 'System Event'
+
+            const knownTypes: Record<string, string> = {
+                'issue.create': 'Issue Created',
+                'issue.update': 'Issue Updated',
+                'issue.comment': 'Comment Added',
+                'issue.delete': 'Issue Deleted',
+            }
+
+            if (knownTypes[type]) {
+                return knownTypes[type]
+            }
+
+            // Fallback auto-formatter for unknown types (e.g., "issue.multi_update" -> "Issue Multi Update")
+            return type
+                .split(/[._-]/)
+                .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+                .join(' ')
+        }
+
+        return (
+            <>
+                <div className="flex flex-col gap-1.5 my-2">
+                    {comment.changeLog?.map((log, index) => {
+                        const icon = getFieldIcon(log.field)
+                        const label = getFieldLabel(log.field)
+
+                        // 1. ATTACHMENT LOGS
+                        if (log.field === 'attachment' || log.attachmentInfo) {
+                            const fileName = log.attachmentInfo?.name || log.newValue || log.originalValue
+                            return (
+                                <div key={index}
+                                     className="inline-flex items-center gap-1.5 text-xs text-muted-foreground">
+                                    {icon}
+                                    <span>Added attachment:</span>
+                                    <Badge variant="outline" className="font-mono text-xs bg-muted/30 px-2 py-0.5">
+                                        {fileName}
+                                    </Badge>
+                                </div>
+                            )
+                        }
+
+                        // 2. NOTIFICATION LOGS
+                        if (log.field === 'notification' || log.notificationInfo) {
+                            const formattedNotif = formatNotificationType(log.notificationInfo?.type)
+                            return (
+                                <div key={index}
+                                     className="inline-flex items-center gap-1.5 text-xs text-muted-foreground">
+                                    {icon}
+                                    <span>Triggered notification:</span>
+                                    <Badge variant="secondary" className="font-medium text-xs px-2 py-0.5">
+                                        {formattedNotif}
+                                    </Badge>
+                                </div>
+                            )
+                        }
+
+                        // 3. DESCRIPTION / LONG TEXT UPDATES
+                        if (log.field === 'description') {
+                            return (
+                                <div key={index}
+                                     className="inline-flex items-center gap-1.5 text-xs text-muted-foreground">
+                                    {icon}
+                                    <span>Updated <strong>Description</strong></span>
+                                </div>
+                            )
+                        }
+
+                        // 4. STANDARD VALUE TRANSITIONS (Status, Assignee, Dates, Components, etc.)
+                        return (
+                            <div key={index}
+                                 className="inline-flex flex-wrap items-center gap-1.5 text-xs text-muted-foreground">
+                                {icon}
+                                <span>Changed {label}:</span>
+
+                                {log.originalValue ? (
                                     <Badge
                                         variant="outline"
                                         className="font-normal text-muted-foreground/80 line-through bg-muted/40 text-xs px-2 py-0.5"
                                     >
                                         {log.originalValue}
                                     </Badge>
+                                ) : (
+                                    <span className="italic text-muted-foreground/60 text-xs">None</span>
                                 )}
 
-                            {log.originalValue && log.newValue && (
-                                <ArrowRight className="h-3.5 w-3.5 text-muted-foreground shrink-0"/>
-                            )}
+                                <ArrowRight className="size-3 text-muted-foreground/60 shrink-0"/>
 
-                            {log.newValue && (
-                                <Badge
-                                    variant="secondary"
-                                    className="font-medium text-xs px-2 py-0.5"
-                                >
-                                    {log.newValue}
-                                </Badge>
-                            )}
-                            </span>
-                    ))}
+                                {log.newValue ? (
+                                    <Badge variant="secondary" className="font-medium text-xs px-2 py-0.5">
+                                        {log.newValue}
+                                    </Badge>
+                                ) : (
+                                    <span className="italic text-muted-foreground/60 text-xs">Cleared</span>
+                                )}
+                            </div>
+                        )
+                    })}
                 </div>
-            )
-        }
+                <Separator className='mb-5'/>
+            </>
+        )
     }
 
     return (
