@@ -1,20 +1,22 @@
+/* ==========================================
+   Source 1: Lexical Theme, Code, & Prism Tokens
+   ========================================== */
 .EditorTheme__code {
   background-color: var(--muted);
   color: var(--foreground);
-  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, Consolas, Monaco, monospace);
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, Consolas, Monaco, monospace), serif;
   display: block;
   padding: 8px 8px 8px 52px;
   line-height: 1.53;
   font-size: 13px;
-  margin: 0;
-  margin-top: 8px;
-  margin-bottom: 8px;
+  margin: 8px 0;
   overflow-x: auto;
   border: 1px solid var(--border);
   position: relative;
   border-radius: var(--radius-md, 8px);
   tab-size: 2;
 }
+
 .EditorTheme__code:before {
   content: attr(data-gutter);
   position: absolute;
@@ -28,68 +30,38 @@
   text-align: right;
   min-width: 25px;
 }
+
 .EditorTheme__table {
   border-collapse: collapse;
   border-spacing: 0;
   overflow-y: scroll;
   overflow-x: scroll;
   table-layout: fixed;
-  width: fit-content;
   width: 100%;
   margin: 0px 0px 30px 0px;
 }
 
-/* Prism-style syntax palette — kept chromatic on purpose. */
-.EditorTheme__tokenComment {
-  color: #6a737d;
-}
-.EditorTheme__tokenPunctuation {
-  color: #999;
-}
-.EditorTheme__tokenProperty {
-  color: #905;
-}
-.EditorTheme__tokenSelector {
-  color: #690;
-}
-.EditorTheme__tokenOperator {
-  color: #9a6e3a;
-}
-.EditorTheme__tokenAttr {
-  color: #07a;
-}
-.EditorTheme__tokenVariable {
-  color: #e90;
-}
-.EditorTheme__tokenFunction {
-  color: #dd4a68;
-}
+/* Prism-style syntax palette (Light Mode) */
+.EditorTheme__tokenComment { color: #6a737d; }
+.EditorTheme__tokenPunctuation { color: #999; }
+.EditorTheme__tokenProperty { color: #905; }
+.EditorTheme__tokenSelector { color: #690; }
+.EditorTheme__tokenOperator { color: #9a6e3a; }
+.EditorTheme__tokenAttr { color: #07a; }
+.EditorTheme__tokenVariable { color: #e90; }
+.EditorTheme__tokenFunction { color: #dd4a68; }
 
-.dark .EditorTheme__tokenComment {
-  color: #8b949e;
-}
-.dark .EditorTheme__tokenPunctuation {
-  color: #c9d1d9;
-}
-.dark .EditorTheme__tokenProperty {
-  color: #ff7b72;
-}
-.dark .EditorTheme__tokenSelector {
-  color: #a5d6ff;
-}
-.dark .EditorTheme__tokenOperator {
-  color: #ffa657;
-}
-.dark .EditorTheme__tokenAttr {
-  color: #79c0ff;
-}
-.dark .EditorTheme__tokenVariable {
-  color: #ffa657;
-}
-.dark .EditorTheme__tokenFunction {
-  color: #d2a8ff;
-}
+/* Prism-style syntax palette (Dark Mode) */
+.dark .EditorTheme__tokenComment { color: #8b949e; }
+.dark .EditorTheme__tokenPunctuation { color: #c9d1d9; }
+.dark .EditorTheme__tokenProperty { color: #ff7b72; }
+.dark .EditorTheme__tokenSelector { color: #a5d6ff; }
+.dark .EditorTheme__tokenOperator { color: #ffa657; }
+.dark .EditorTheme__tokenAttr { color: #79c0ff; }
+.dark .EditorTheme__tokenVariable { color: #ffa657; }
+.dark .EditorTheme__tokenFunction { color: #d2a8ff; }
 
+/* Collapsible Component Styles */
 .Collapsible__container {
   background-color: var(--background);
   border: 1px solid var(--border);
@@ -98,8 +70,7 @@
 }
 
 .Collapsible__title {
-  padding: 0.25rem;
-  padding-left: 1rem;
+  padding: 0.25rem 0.25rem 0.25rem 1rem;
   position: relative;
   font-weight: bold;
   outline: none;
@@ -111,9 +82,74 @@
 .Collapsible__title p {
   display: inline-flex;
 }
+
 .Collapsible__title::marker {
   color: var(--muted-foreground);
 }
+
 .Collapsible__container[open] > .Collapsible__title {
   list-style-type: disclosure-open;
+}
+
+
+/* ==========================================
+   Source 2: shadcn / typeset Typography Rules
+   ========================================== */
+@layer components {
+  .typeset {
+    --typeset-font-body: inherit;
+    --typeset-font-heading: var(--font-heading);
+    --typeset-font-mono: var(--font-mono);
+    --typeset-size: 1em;
+    --typeset-leading: 1.75;
+    --typeset-flow: 1.25em;
+
+    font-family: var(--typeset-font-body);
+    font-size: calc(var(--typeset-size) * 1.125);
+    line-height: var(--typeset-leading);
+    color: var(--color-foreground, currentColor);
+    overflow-wrap: break-word;
+    margin-trim: block-start;
+
+    @media (min-width: 48rem), print {
+      font-size: var(--typeset-size);
+    }
+
+    --typeset-muted: var(
+            --color-muted-foreground,
+            color-mix(in oklab, currentColor 60%, transparent)
+    );
+    --typeset-rule: var(
+            --color-border,
+            color-mix(in oklab, currentColor 20%, transparent)
+    );
+  }
+
+  .typeset *:not(:where(.not-typeset, [data-not-typeset], .not-typeset *, [data-not-typeset] *)) {
+    &:where(p) { margin-block-start: var(--typeset-flow); margin-block-end: 0; }
+    &:where(h1, h2, h3, h4, h5, h6) { color: var(--color-foreground, currentColor); font-family: var(--typeset-font-heading); font-weight: 600; margin-block-end: 0; }
+    &:where(h1) { font-size: 1.75em; line-height: 1.3; margin-block-start: var(--typeset-flow); }
+    &:where(h2) { font-size: 1.25em; line-height: 1.4; margin-block-start: calc(var(--typeset-flow) * 1.4); }
+    &:where(h3) { font-size: 1.125em; line-height: 1.45; margin-block-start: var(--typeset-flow); }
+    &:where(h4) { font-size: 1em; line-height: 1.5; margin-block-start: var(--typeset-flow); }
+    &:where(h5) { font-size: 0.875em; line-height: 1.5; font-weight: 500; color: var(--typeset-muted); margin-block-start: calc(var(--typeset-flow) / 0.875); }
+    &:where(h6) { font-size: 0.8125em; line-height: 1.5; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--typeset-muted); margin-block-start: calc(var(--typeset-flow) / 0.8125); }
+    &:where(h1 + *, h2 + *, h3 + *, h4 + *, h5 + *, h6 + *) { margin-block-start: 1em; }
+
+    &:where(a) { color: inherit; font-weight: 500; text-decoration-line: underline; text-decoration-color: color-mix(in oklab, currentColor 30%, transparent); }
+    &:where(a:hover) { text-decoration-color: currentColor; }
+
+    &:where(strong, b) { font-weight: 600; }
+    &:where(ul) { list-style-type: disc; }
+    &:where(ol) { list-style-type: decimal; }
+    &:where(ul, ol) { margin-block-start: var(--typeset-flow); margin-block-end: 0; padding-inline-start: 1.5em; }
+    &:where(li) { margin-block-start: 0.5em; padding-inline-start: 0.4em; }
+
+    &:where(blockquote) { border-inline-start: 2px solid var(--typeset-rule); padding-inline-start: 1em; margin-block-start: var(--typeset-flow); margin-block-end: 0; margin-inline: 0; }
+    &:where(hr) { border: 0; border-block-start: 1px solid var(--typeset-rule); margin-block-start: calc(var(--typeset-flow) * 2.4); margin-block-end: 0; }
+  }
+
+  .typeset > :where(:first-child):not(:where(.not-typeset, [data-not-typeset], .not-typeset *, [data-not-typeset] *)) {
+    margin-block-start: 0;
+  }
 }

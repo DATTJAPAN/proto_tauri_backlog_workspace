@@ -368,7 +368,7 @@ export function Editor({
                                 <div className="" ref={onRef}>
                                     <ContentEditable
                                         placeholder={placeholder}
-                                        className="h-[calc(100vh-141px)] overflow-y-auto pl-4"
+                                        className="typeset h-[calc(100vh-141px)] overflow-y-auto pl-4"
                                     />
                                 </div>
                             </div>

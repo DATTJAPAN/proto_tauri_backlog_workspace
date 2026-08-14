@@ -1,8 +1,8 @@
 "use client"
 
 import * as React from "react"
-import { Form, Field as FormischField, useForm } from "@formisch/react"
-import type { SubmitHandler } from "@formisch/react"
+import {Form, Field as FormischField, useForm} from "@formisch/react"
+import type {SubmitHandler} from "@formisch/react"
 import {
     $convertToMarkdownString,
     CHECK_LIST,
@@ -11,14 +11,14 @@ import {
     TEXT_FORMAT_TRANSFORMERS,
     TEXT_MATCH_TRANSFORMERS,
 } from "@lexical/markdown"
-import type { EditorState } from "lexical"
+import type {EditorState} from "lexical"
 import * as v from "valibot"
 
-import { EMOJI } from "@/components/editor/transformers/markdown-emoji-transformer"
-import { HR } from "@/components/editor/transformers/markdown-hr-transformer"
-import { IMAGE } from "@/components/editor/transformers/markdown-image-transformer"
-import { TABLE } from "@/components/editor/transformers/markdown-table-transformer"
-import { Editor } from "@/components/ui/editor-x"
+import {EMOJI} from "@/components/editor/transformers/markdown-emoji-transformer"
+import {HR} from "@/components/editor/transformers/markdown-hr-transformer"
+import {IMAGE} from "@/components/editor/transformers/markdown-image-transformer"
+import {TABLE} from "@/components/editor/transformers/markdown-table-transformer"
+import {Editor} from "@/components/ui/editor-x"
 import {
     Field,
     FieldDescription,
@@ -26,7 +26,7 @@ import {
     FieldGroup,
     FieldLabel,
 } from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
+import {Input} from "@/components/ui/input"
 
 const MARKDOWN_TRANSFORMERS = [
     TABLE,
@@ -82,17 +82,16 @@ export function CreateIssueForm() {
                                     aria-invalid={field.errors !== null}
                                     placeholder="e.g. Backend - Implement Application User"
                                     autoComplete="off"
-                                    className="w-full"
+                                    className="w-full text-lg"
                                 />
                                 {field.errors && (
                                     <FieldError
-                                        errors={field.errors.map((message) => ({ message }))}
+                                        errors={field.errors.map((message) => ({message}))}
                                     />
                                 )}
                             </Field>
                         )}
                     </FormischField>
-
                     {/* Issue Description Field */}
                     <FormischField of={form} path={["description"]}>
                         {(field) => {
@@ -121,7 +120,7 @@ export function CreateIssueForm() {
 
                                     {field.errors && (
                                         <FieldError
-                                            errors={field.errors.map((message) => ({ message }))}
+                                            errors={field.errors.map((message) => ({message}))}
                                         />
                                     )}
                                 </Field>
@@ -133,6 +132,7 @@ export function CreateIssueForm() {
         </div>
     )
 }
+
 const EditorWrapper = React.memo(function EditorWrapper({
                                                             onMarkdownChange,
                                                         }: {
@@ -163,5 +163,7 @@ const EditorWrapper = React.memo(function EditorWrapper({
         }
     }, [])
 
-    return <Editor onChange={handleChange} />
+    return <Editor
+        enableTable
+        onChange={handleChange}/>
 })
