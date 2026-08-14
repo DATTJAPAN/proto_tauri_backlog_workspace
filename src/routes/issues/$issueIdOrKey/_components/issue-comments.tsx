@@ -27,7 +27,7 @@ import {h_array_length} from "@/helper/array.ts";
 import {Badge} from "@/components/ui/badge.tsx";
 import {Separator} from "@/components/ui/separator.tsx";
 
-const COMMENT_LIMIT = 100
+const COMMENT_LIMIT = 50
 
 export function IssueComments(
     {
@@ -41,6 +41,7 @@ export function IssueComments(
     const [totalCount, setTotalCount] = useState(0)
     const [currentUserId, setCurrentUserId] = useState<number | null>(null)
     const [loading, setLoading] = useState(true)
+    const [loadingMore, setLoadingMore] = useState(false)
     const [error, setError] = useState<string | null>(null)
 
     useEffect(() => {
@@ -69,6 +70,30 @@ export function IssueComments(
         }
     }, [issueIdOrKey])
 
+    const loadMore = () => {
+        const oldestId = comments[0]?.id
+        if (oldestId === undefined || loadingMore) return
+
+        setLoadingMore(true)
+        setError(null)
+
+        void backlog.issues.comments.getAll(issueIdOrKey, {
+            order: 'desc',
+            count: COMMENT_LIMIT,
+            maxId: oldestId,
+        }).then((olderComments) => {
+            setComments((current) => {
+                const loadedIds = new Set(current.map((comment) => comment.id))
+                const newComments = olderComments.filter((comment) => !loadedIds.has(comment.id))
+                return [...newComments.reverse(), ...current]
+            })
+        }).catch((cause) => {
+            setError(cause instanceof Error ? cause.message : String(cause))
+        }).finally(() => {
+            setLoadingMore(false)
+        })
+    }
+
     return (
         <Card>
             <CardHeader className="border-b">
@@ -94,9 +119,16 @@ export function IssueComments(
                             <p className="py-8 text-center text-sm text-muted-foreground">No comments yet.</p>
                         )}
                         {!loading && !error && totalCount > comments.length && (
-                            <p className="border bg-muted/40 px-3 py-2 text-center text-xs text-muted-foreground">
-                                Showing the latest {comments.length} of {totalCount} comments.
-                            </p>
+                            <button
+                                type="button"
+                                className="block w-full border bg-muted/40 px-3 py-2 text-center text-xs text-muted-foreground hover:bg-muted hover:text-foreground disabled:pointer-events-none disabled:opacity-60"
+                                onClick={loadMore}
+                                disabled={loadingMore}
+                            >
+                                {loadingMore
+                                    ? 'Loading more comments…'
+                                    : `Show more comments (showing ${comments.length} of ${totalCount})`}
+                            </button>
                         )}
                         {!loading && !error && comments.map((comment) => (
                             <IssueComment

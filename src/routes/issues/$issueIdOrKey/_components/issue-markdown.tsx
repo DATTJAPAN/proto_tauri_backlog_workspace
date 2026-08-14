@@ -162,7 +162,7 @@ function AttachmentImage({attachmentId, ...props}: ComponentPropsWithoutRef<'img
                     <img
                         src={props.src}
                         alt={alt}
-                        className="max-h-full max-w-full object-contain"
+                        className="h-[85vh] w-[85vw] object-contain"
                         onClick={(event) => event.stopPropagation()}
                     />
                 </div>,
