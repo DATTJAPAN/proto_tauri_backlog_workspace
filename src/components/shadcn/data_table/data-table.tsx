@@ -15,7 +15,7 @@ import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/c
 import {DataTableViewOptions} from './column-toggle'
 import {features as dataTableFeatures, type DataTableFeatures} from './features'
 import {DataTablePagination} from './pagination'
-import {ScrollArea, ScrollBar} from "@/components/scroll-area.tsx";
+import {ScrollArea, ScrollBar} from "@/components/ui/scroll-area.tsx";
 
 const SKELETON_ROW_HEIGHT = 44
 

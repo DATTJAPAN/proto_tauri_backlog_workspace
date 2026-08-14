@@ -14,6 +14,7 @@ import {
     SidebarHeader,
     SidebarRail,
 } from "@/components/ui/sidebar"
+
 const data = {
     navMain: [
         {
@@ -24,6 +25,11 @@ const data = {
         {
             title: "Issues",
             url: "/issues/",
+            icon: <ListTodoIcon/>,
+        },
+        {
+            title: "Add Issues",
+            url: "/issues/create/",
             icon: <ListTodoIcon/>,
         },
     ],
@@ -56,7 +62,9 @@ export function SidebarLeft({
                 if (active) setLoadingProjects(false)
             })
 
-        return () => { active = false }
+        return () => {
+            active = false
+        }
     }, [])
 
     return (
