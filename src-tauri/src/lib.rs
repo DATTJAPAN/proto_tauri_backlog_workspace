@@ -1,6 +1,6 @@
 use base64::{engine::general_purpose::STANDARD, Engine as _};
 use keyring::{Entry, Error as KeyringError};
-use rand::RngCore;
+use rand::Rng;
 use tauri::Manager;
 
 mod backlog;
@@ -26,7 +26,7 @@ fn load_local_env() {
 
     if env_path.exists() {
         dotenvy::from_path(&env_path).expect("failed to load .env.local");
-
+        // This is needed to do an oauth login flow
         let configured_variables = [
             "BACKLOG_REDIRECT_URL",
             "BACKLOG_CLIENT_ID",

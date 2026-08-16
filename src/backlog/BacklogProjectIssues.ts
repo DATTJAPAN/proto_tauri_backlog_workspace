@@ -1,4 +1,5 @@
-import {invoke} from '@tauri-apps/api/core'
+import { useQuery } from '@tanstack/react-query'
+import { invoke } from '@tauri-apps/api/core'
 
 import type {BacklogAuthentication} from './BacklogAuthentication'
 import type {BacklogProjectIssueNamedResource} from './BacklogProjectIssueNamedResource'
@@ -77,70 +78,98 @@ export type BacklogIssueListOptions = {
 }
 
 export class BacklogProjectIssues {
-  private readonly _authentication: BacklogAuthentication
-  public readonly comments: BacklogProjectIssueComments
+    private readonly _authentication: BacklogAuthentication
+    public readonly comments: BacklogProjectIssueComments
 
-  public constructor(authentication: BacklogAuthentication) {
-    this._authentication = authentication
-    this.comments = new BacklogProjectIssueComments(authentication)
-  }
+    public constructor(authentication: BacklogAuthentication) {
+        this._authentication = authentication
+        this.comments = new BacklogProjectIssueComments(authentication)
+    }
 
-  public async get(issueIdOrKey: number | string): Promise<BacklogProjectIssue> {
-    const connection = await this._authentication.getConnection()
-    if (!connection) throw new Error('Backlog is not connected')
+    // --- API Methods ---
 
-    return invoke<BacklogProjectIssue>('backlog_project_issue_get', {
-      spaceUrl: connection.spaceUrl,
-      issueIdOrKey: String(issueIdOrKey),
-      apiKey: connection.method === 'api-key' ? connection.apiKey : null,
-      accessToken: connection.method === 'oauth' ? connection.accessToken : null,
-    })
-  }
+    public async get(issueIdOrKey: number | string): Promise<BacklogProjectIssue> {
+        const connection = await this._authentication.getConnection()
+        if (!connection) throw new Error('Backlog is not connected')
 
-  public async getAttachment(
-    issueIdOrKey: number | string,
-    attachmentId: number,
-  ): Promise<BacklogProjectIssueAttachmentContent> {
-    const connection = await this._authentication.getConnection()
-    if (!connection) throw new Error('Backlog is not connected')
+        return invoke<BacklogProjectIssue>('backlog_project_issue_get', {
+            spaceUrl: connection.spaceUrl,
+            issueIdOrKey: String(issueIdOrKey),
+            apiKey: connection.method === 'api-key' ? connection.apiKey : null,
+            accessToken: connection.method === 'oauth' ? connection.accessToken : null,
+        })
+    }
 
-    return invoke<BacklogProjectIssueAttachmentContent>('backlog_project_issue_attachment_get', {
-      spaceUrl: connection.spaceUrl,
-      issueIdOrKey: String(issueIdOrKey),
-      attachmentId,
-      apiKey: connection.method === 'api-key' ? connection.apiKey : null,
-      accessToken: connection.method === 'oauth' ? connection.accessToken : null,
-    })
-  }
+    public async getAttachment(
+        issueIdOrKey: number | string,
+        attachmentId: number,
+    ): Promise<BacklogProjectIssueAttachmentContent> {
+        const connection = await this._authentication.getConnection()
+        if (!connection) throw new Error('Backlog is not connected')
 
-  public async getAll(options: BacklogIssueListOptions): Promise<BacklogProjectIssue[]> {
-    const connection = await this._authentication.getConnection()
-    if (!connection) return []
+        return invoke<BacklogProjectIssueAttachmentContent>('backlog_project_issue_attachment_get', {
+            spaceUrl: connection.spaceUrl,
+            issueIdOrKey: String(issueIdOrKey),
+            attachmentId,
+            apiKey: connection.method === 'api-key' ? connection.apiKey : null,
+            accessToken: connection.method === 'oauth' ? connection.accessToken : null,
+        })
+    }
 
-    return invoke<BacklogProjectIssue[]>('backlog_project_issue_list', {
-      spaceUrl: connection.spaceUrl,
-      queryString: [
-        ['_projectId[]', String(options.projectId)],
-        ['_order', options.order ?? 'desc'],
-        ['_offset', String(options.offset ?? 0)],
-        ['_count', String(options.count ?? 20)],
-      ],
-      apiKey: connection.method === 'api-key' ? connection.apiKey : null,
-      accessToken: connection.method === 'oauth' ? connection.accessToken : null,
-    })
-  }
+    public async getAll(options: BacklogIssueListOptions): Promise<BacklogProjectIssue[]> {
+        const connection = await this._authentication.getConnection()
+        if (!connection) return []
 
-  public async getCount(projectId: number): Promise<number> {
-    const connection = await this._authentication.getConnection()
-    if (!connection) return 0
+        return invoke<BacklogProjectIssue[]>('backlog_project_issue_list', {
+            spaceUrl: connection.spaceUrl,
+            queryString: [
+                ['_projectId[]', String(options.projectId)],
+                ['_order', options.order ?? 'desc'],
+                ['_offset', String(options.offset ?? 0)],
+                ['_count', String(options.count ?? 20)],
+            ],
+            apiKey: connection.method === 'api-key' ? connection.apiKey : null,
+            accessToken: connection.method === 'oauth' ? connection.accessToken : null,
+        })
+    }
 
-    const result = await invoke<{count: number}>('backlog_project_issue_count', {
-      spaceUrl: connection.spaceUrl,
-      queryString: [['_projectId[]', String(projectId)]],
-      apiKey: connection.method === 'api-key' ? connection.apiKey : null,
-      accessToken: connection.method === 'oauth' ? connection.accessToken : null,
-    })
+    public async getCount(projectId: number): Promise<number> {
+        const connection = await this._authentication.getConnection()
+        if (!connection) return 0
 
-    return result.count
-  }
+        const result = await invoke<{ count: number }>('backlog_project_issue_count', {
+            spaceUrl: connection.spaceUrl,
+            queryString: [['_projectId[]', String(projectId)]],
+            apiKey: connection.method === 'api-key' ? connection.apiKey : null,
+            accessToken: connection.method === 'oauth' ? connection.accessToken : null,
+        })
+
+        return result.count
+    }
+
+    // --- React Query Hooks ---
+
+    public useGetAll(options: BacklogIssueListOptions) {
+        return useQuery({
+            queryKey: ['backlog', 'issues', 'list', options],
+            queryFn: () => this.getAll(options),
+            enabled: Boolean(options.projectId),
+        })
+    }
+
+    public useGetCount(projectId: number | null) {
+        return useQuery({
+            queryKey: ['backlog', 'issues', 'count', projectId],
+            queryFn: () => this.getCount(projectId!),
+            enabled: Boolean(projectId),
+        })
+    }
+
+    public useGet(issueIdOrKey: number | string) {
+        return useQuery({
+            queryKey: ['backlog', 'issues', 'detail', issueIdOrKey],
+            queryFn: () => this.get(issueIdOrKey),
+            enabled: Boolean(issueIdOrKey),
+        })
+    }
 }

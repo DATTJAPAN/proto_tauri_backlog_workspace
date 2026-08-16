@@ -18,9 +18,9 @@ import rehypeKatex from 'rehype-katex'
 import rehypeRaw from 'rehype-raw'
 import rehypeSlug from 'rehype-slug'
 import remarkBreaks from 'remark-breaks'
-import remarkEmoji from 'remark-emoji'
 import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
+import remarkGemoji from 'remark-gemoji'
 import type {Parent, PhrasingContent, Root} from 'mdast'
 import type {PluggableList, Plugin} from 'unified'
 import {CheckIcon, CopyIcon, DownloadIcon, ExternalLinkIcon, LinkIcon} from 'lucide-react'
@@ -113,7 +113,8 @@ export const MarkdownRenderer = memo(
             const plugins: PluggableList = [remarkBreaks]
             if (enabledFeatures.gfm) plugins.push(remarkGfm)
             if (enabledFeatures.math) plugins.push(remarkMath)
-            if (enabledFeatures.emoji) plugins.push([remarkEmoji, {padSpaceAfter: true}])
+            // if (enabledFeatures.emoji) plugins.push([remarkEmoji, {padSpaceAfter: true}])
+            if (enabledFeatures.emoji) plugins.push(remarkGemoji)
             if (enabledFeatures.mentions) {
                 plugins.push([remarkMentions, {names: mentionNames, resolveHref: resolveMentionHref}])
             }

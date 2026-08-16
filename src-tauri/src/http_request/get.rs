@@ -1,7 +1,32 @@
 use base64::{engine::general_purpose::STANDARD, Engine as _};
+use http_cache_reqwest::{Cache, CacheMode, CACacheManager, CacheOptions, HttpCache, HttpCacheOptions};
+use reqwest_middleware::{ClientBuilder, ClientWithMiddleware};
 use serde::de::DeserializeOwned;
 use serde::{Deserialize, Serialize};
+use std::path::PathBuf;
+use std::sync::OnceLock;
 use url::Url;
+
+static HTTP_CLIENT: OnceLock<ClientWithMiddleware> = OnceLock::new();
+
+/// Returns a shared `reqwest` client equipped with HTTP caching middleware.
+fn get_client() -> &'static ClientWithMiddleware {
+    HTTP_CLIENT.get_or_init(|| {
+        ClientBuilder::new(reqwest::Client::new())
+            .with(Cache(HttpCache {
+                mode: CacheMode::Default,
+                manager: CACacheManager::new(PathBuf::from("./cache"), false),
+                options: HttpCacheOptions {
+                    cache_options: Some(CacheOptions {
+                        shared: false,
+                        ..Default::default()
+                    }),
+                    ..Default::default()
+                },
+            }))
+            .build()
+    })
+}
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -46,23 +71,39 @@ where
         }
     }
 
-    let client = reqwest::Client::new();
+    let client = get_client();
     let request = if let Some(api_key) = options.api_key.filter(|value| !value.trim().is_empty()) {
         url.query_pairs_mut().append_pair("apiKey", api_key.trim());
-        client.get(url)
+        client.get(url.clone())
     } else if let Some(access_token) = options
         .access_token
         .filter(|value| !value.trim().is_empty())
     {
-        client.get(url).bearer_auth(access_token.trim())
+        client.get(url.clone()).bearer_auth(access_token.trim())
     } else {
         return Err("An API key or OAuth access token is required".to_owned());
     };
+
+    println!("[http_request] GET -> {url}");
 
     let response = request
         .send()
         .await
         .map_err(|error| format!("Could not complete GET request: {error}"))?;
+
+    let status = response.status();
+    let cache_status = response
+        .headers()
+        .get("x-cache")
+        .and_then(|value| value.to_str().ok())
+        .unwrap_or("N/A");
+    let cache_control = response
+        .headers()
+        .get("cache-control")
+        .and_then(|value| value.to_str().ok())
+        .unwrap_or("none");
+
+    println!("[http_request] Status: {status} | Cache Status: {cache_status} | Cache-Control: {cache_control}");
 
     if !response.status().is_success() {
         return Err(format!(
@@ -93,23 +134,39 @@ pub async fn get_binary(mut url: Url, options: HttpGetOptions) -> Result<HttpBin
         }
     }
 
-    let client = reqwest::Client::new();
+    let client = get_client();
     let request = if let Some(api_key) = options.api_key.filter(|value| !value.trim().is_empty()) {
         url.query_pairs_mut().append_pair("apiKey", api_key.trim());
-        client.get(url)
+        client.get(url.clone())
     } else if let Some(access_token) = options
         .access_token
         .filter(|value| !value.trim().is_empty())
     {
-        client.get(url).bearer_auth(access_token.trim())
+        client.get(url.clone()).bearer_auth(access_token.trim())
     } else {
         return Err("An API key or OAuth access token is required".to_owned());
     };
+
+    println!("[http_request] GET (binary) -> {url}");
 
     let response = request
         .send()
         .await
         .map_err(|error| format!("Could not complete binary GET request: {error}"))?;
+
+    let status = response.status();
+    let cache_status = response
+        .headers()
+        .get("x-cache")
+        .and_then(|value| value.to_str().ok())
+        .unwrap_or("N/A");
+    let cache_control = response
+        .headers()
+        .get("cache-control")
+        .and_then(|value| value.to_str().ok())
+        .unwrap_or("none");
+
+    println!("[http_request] Status (binary): {status} | Cache Status: {cache_status} | Cache-Control: {cache_control}");
 
     if !response.status().is_success() {
         return Err(format!(

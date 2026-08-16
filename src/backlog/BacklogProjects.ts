@@ -1,3 +1,4 @@
+import {useQuery} from '@tanstack/react-query'
 import {invoke} from '@tauri-apps/api/core'
 
 import type {BacklogAuthentication} from './BacklogAuthentication'
@@ -22,6 +23,8 @@ export class BacklogProjects {
     public constructor(authentication: BacklogAuthentication) {
         this._authentication = authentication
     }
+
+    // --- API Methods ---
 
     public async getAll(): Promise<BacklogProject[]> {
         const connection = await this._authentication.getConnection()
@@ -67,5 +70,14 @@ export class BacklogProjects {
         return () => {
             window.removeEventListener(this._activeProjectChangedEvent.eventName, handleChange)
         }
+    }
+
+    // --- React Query Hooks ---
+
+    public useGetAll() {
+        return useQuery({
+            queryKey: ['backlog', 'projects', 'list'],
+            queryFn: () => this.getAll(),
+        })
     }
 }

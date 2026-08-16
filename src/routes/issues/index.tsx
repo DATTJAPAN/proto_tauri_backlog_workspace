@@ -1,10 +1,9 @@
-import {useCallback, useEffect, useMemo, useState} from 'react'
+import {useEffect, useMemo, useState} from 'react'
 import {createFileRoute, redirect} from '@tanstack/react-router'
 import type {PaginationState} from '@tanstack/react-table'
 import {AlertCircleIcon, ArrowRightIcon, CheckCircle2Icon, CircleIcon, FlagIcon, ListTodoIcon} from 'lucide-react'
 
 import {backlog} from '@/backlog/Backlog'
-import type {BacklogProjectIssue} from '@/backlog/BacklogProjectIssues'
 import {DataTable} from '@/components/shadcn'
 import {Separator} from '@/components/ui/separator'
 import {SidebarTrigger} from '@/components/ui/sidebar'
@@ -21,12 +20,30 @@ export const Route = createFileRoute('/issues/')({
 })
 
 function IssuesPage() {
-    const [issues, setIssues] = useState<BacklogProjectIssue[]>([])
     const [projectId, setProjectId] = useState(() => backlog.projects.getActiveId())
     const [pagination, setPagination] = useState<PaginationState>({pageIndex: 0, pageSize: PAGE_SIZE})
-    const [totalCount, setTotalCount] = useState(0)
-    const [loading, setLoading] = useState(true)
-    const [error, setError] = useState<string | null>(null)
+
+    // Calling TanStack Query hooks directly on the backlog singleton instance
+    const {
+        data: issues = [],
+        isLoading: isIssuesLoading,
+        error: issuesError,
+    } = backlog.issues.useGetAll({
+        projectId: projectId ?? 0,
+        order: 'desc',
+        offset: pagination.pageIndex * pagination.pageSize,
+        count: pagination.pageSize,
+    })
+
+    const {
+        data: totalCount = 0,
+        isLoading: isCountLoading,
+        error: countError,
+    } = backlog.issues.useGetCount(projectId)
+
+    const loading = isIssuesLoading || isCountLoading
+    const error = issuesError?.message ?? countError?.message ?? null
+
     const columns = useMemo(() => {
         const longestKeyLength = issues.reduce((length, issue) => Math.max(length, issue.issueKey.length), 0)
         const keyColumnSize = Math.max(120, longestKeyLength * 8 + 32)
@@ -35,36 +52,6 @@ function IssuesPage() {
             ? {...column, size: keyColumnSize, minSize: keyColumnSize, maxSize: keyColumnSize}
             : column)
     }, [issues])
-
-    const loadIssues = useCallback(async (activeProjectId: number | null, pageOffset: number, count: number) => {
-        if (activeProjectId === null) {
-            setIssues([])
-            setTotalCount(0)
-            setLoading(false)
-            return
-        }
-
-        setLoading(true)
-        setError(null)
-        try {
-            const [nextIssues, nextTotalCount] = await Promise.all([
-                backlog.issues.getAll({projectId: activeProjectId, order: 'desc', offset: pageOffset, count}),
-                backlog.issues.getCount(activeProjectId),
-            ])
-            setIssues(nextIssues)
-            setTotalCount(nextTotalCount)
-        } catch (cause) {
-            setIssues([])
-            setTotalCount(0)
-            setError(cause instanceof Error ? cause.message : String(cause))
-        } finally {
-            setLoading(false)
-        }
-    }, [])
-
-    useEffect(() => {
-        void loadIssues(projectId, pagination.pageIndex * pagination.pageSize, pagination.pageSize)
-    }, [loadIssues, pagination, projectId])
 
     useEffect(() => backlog.projects.onActiveChanged((nextProjectId) => {
         setProjectId(nextProjectId)
@@ -92,8 +79,10 @@ function IssuesPage() {
                     <div role="alert"
                          className="mb-4 flex items-start gap-3 rounded-lg border border-destructive/40 bg-destructive/5 px-4 py-3 text-sm text-destructive">
                         <AlertCircleIcon className="mt-0.5 size-4 shrink-0"/>
-                        <div><p className="font-medium">Unable to load issues</p><p
-                            className="mt-0.5 text-destructive/90">{error}</p></div>
+                        <div>
+                            <p className="font-medium">Unable to load issues</p>
+                            <p className="mt-0.5 text-destructive/90">{error}</p>
+                        </div>
                     </div>
                 )}
                 <div className="mb-3 flex flex-wrap items-center gap-x-5 gap-y-2 border px-3 py-2 text-xs text-muted-foreground">

@@ -15,31 +15,45 @@ export const Route = createFileRoute('/issues/$issueIdOrKey/')({
     beforeLoad: async () => {
         if (!await backlog.isConnected()) throw redirect({to: '/on-boarding'})
     },
-    loader: async ({params}) => {
-        const issue = await backlog.issues.get(params.issueIdOrKey)
-        const projectUsers = await backlog.projectUsers.getAll(issue.projectId, {excludeGroupMembers: false}).catch(() => [])
-        return {issue, projectUsers}
-    },
-    pendingComponent: IssuePendingPage,
-    errorComponent: IssueErrorPage,
     component: IssuePage,
 })
 
 function IssuePage() {
-    const {issue, projectUsers} = Route.useLoaderData()
+    const {issueIdOrKey} = Route.useParams()
 
-    // Extract usernames to mention auto-detection
+    // 1. Fetch issue details using TanStack Query
+    const {
+        data: issue,
+        isLoading: isIssueLoading,
+        error: issueError,
+    } = backlog.issues.useGet(issueIdOrKey)
+
+    // 2. Fetch project users conditionally once issue.projectId is available
+    const {data: projectUsers = []} = backlog.projectUsers.useGetAll(
+        issue?.projectId ?? null,
+        {excludeGroupMembers: false}
+    )
+
+    // Extract usernames for "mention auto-detection"
     const mentionNames = useMemo(() => {
-        console.log(projectUsers)
         return projectUsers.map((user) => user.name).filter(Boolean)
     }, [projectUsers])
+
+    if (isIssueLoading) {
+        return <IssuePendingPage/>
+    }
+
+    if (issueError || !issue) {
+        return <IssueErrorPage error={issueError ?? new Error('Issue not found')}/>
+    }
 
     return (
         <AppShell>
             <IssueViewHeader issueKey={issue.issueKey}/>
             <main className="min-w-0 flex-1 overflow-y-auto p-4 sm:p-6">
                 <div className="mx-auto max-w-7xl space-y-5">
-                    <div className="grid items-stretch gap-5 lg:grid-cols-[minmax(0,1fr)_22rem] xl:grid-cols-[minmax(0,1fr)_24rem]">
+                    <div
+                        className="grid items-stretch gap-5 lg:grid-cols-[minmax(0,1fr)_22rem] xl:grid-cols-[minmax(0,1fr)_24rem]">
                         <div className="flex min-w-0 flex-col gap-5">
                             <IssueTitle issue={issue}/>
                             <Card className="min-h-80 flex-1">
