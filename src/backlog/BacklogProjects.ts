@@ -76,7 +76,7 @@ export class BacklogProjects {
 
     public useGetAll() {
         return useQuery({
-            queryKey: ['backlog', 'projects', 'list'],
+            queryKey: ['backlog', 'projects', 'list', 'backlog_project_list'],
             queryFn: () => this.getAll(),
         })
     }

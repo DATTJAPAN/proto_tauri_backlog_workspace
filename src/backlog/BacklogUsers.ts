@@ -44,7 +44,7 @@ export class BacklogUsers {
 
     public useGetCurrent() {
         return useQuery({
-            queryKey: ['backlog', 'users', 'current'],
+            queryKey: ['backlog', 'users', 'current', 'backlog_get_current_user'],
             queryFn: () => this.getCurrent(),
         })
     }

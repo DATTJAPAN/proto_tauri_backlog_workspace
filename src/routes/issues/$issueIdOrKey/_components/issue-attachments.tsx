@@ -1,6 +1,6 @@
 import {FileIcon, PaperclipIcon} from 'lucide-react'
 
-import type {BacklogProjectIssueAttachment} from '@/backlog/BacklogProjectIssues'
+import type {BacklogProjectIssueAttachment} from '@/backlog/BacklogIssues.ts'
 import {ScrollArea} from '@/components/scroll-area'
 import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card'
 

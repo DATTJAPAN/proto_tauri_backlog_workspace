@@ -9,6 +9,19 @@ use url::Url;
 
 static HTTP_CLIENT: OnceLock<ClientWithMiddleware> = OnceLock::new();
 
+#[derive(Debug, Deserialize)]
+pub struct BacklogErrorDetail {
+    pub message: String,
+    pub code: i32,
+    #[serde(rename = "moreInfo")]
+    pub more_info: Option<String>,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct BacklogErrorResponse {
+    pub errors: Vec<BacklogErrorDetail>,
+}
+
 /// Returns a shared `reqwest` client equipped with HTTP caching middleware.
 fn get_client() -> &'static ClientWithMiddleware {
     HTTP_CLIENT.get_or_init(|| {
@@ -105,17 +118,25 @@ where
 
     println!("[http_request] Status: {status} | Cache Status: {cache_status} | Cache-Control: {cache_control}");
 
-    if !response.status().is_success() {
-        return Err(format!(
-            "GET request failed with HTTP {}",
-            response.status().as_u16()
-        ));
-    }
-
     let body = response
         .text()
         .await
         .map_err(|error| format!("Could not read GET response body: {error}"))?;
+
+    if !status.is_success() {
+        if let Ok(error_response) = serde_json::from_str::<BacklogErrorResponse>(&body) {
+            let messages: Vec<String> = error_response
+                .errors
+                .into_iter()
+                .map(|e| e.message)
+                .collect();
+            if !messages.is_empty() {
+                return Err(messages.join(", "));
+            }
+        }
+
+        return Err(format!("GET request failed with HTTP {}", status.as_u16()));
+    }
 
     serde_json::from_str::<TResponse>(&body).map_err(|error| {
         format!(
@@ -168,10 +189,22 @@ pub async fn get_binary(mut url: Url, options: HttpGetOptions) -> Result<HttpBin
 
     println!("[http_request] Status (binary): {status} | Cache Status: {cache_status} | Cache-Control: {cache_control}");
 
-    if !response.status().is_success() {
+    if !status.is_success() {
+        if let Ok(bytes) = response.bytes().await {
+            if let Ok(error_response) = serde_json::from_slice::<BacklogErrorResponse>(&bytes) {
+                let messages: Vec<String> = error_response
+                    .errors
+                    .into_iter()
+                    .map(|e| e.message)
+                    .collect();
+                if !messages.is_empty() {
+                    return Err(messages.join(", "));
+                }
+            }
+        }
         return Err(format!(
             "Binary GET request failed with HTTP {}",
-            response.status().as_u16()
+            status.as_u16()
         ));
     }
 

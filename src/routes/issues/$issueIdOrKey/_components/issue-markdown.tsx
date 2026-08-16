@@ -4,7 +4,7 @@ import {openUrl} from '@tauri-apps/plugin-opener'
 import {AlertCircleIcon, ExternalLinkIcon, EyeIcon, XIcon} from 'lucide-react'
 
 import {backlog} from '@/backlog/Backlog'
-import type {BacklogProjectIssueAttachment} from '@/backlog/BacklogProjectIssues'
+import type {BacklogProjectIssueAttachment} from '@/backlog/BacklogIssues.ts'
 import {MarkdownRenderer} from '@/components/markdown-renderer'
 import {Skeleton} from '@/components/ui/skeleton'
 

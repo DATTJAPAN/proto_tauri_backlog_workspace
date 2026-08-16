@@ -1,3 +1,4 @@
+pub mod issue;
 pub mod oauth;
 pub mod oauth_callback;
 pub mod project;
@@ -13,3 +14,6 @@ pub mod project_issue_version;
 pub mod project_status;
 pub mod project_user;
 pub mod user;
+pub mod priority;
+pub mod resolution;
+pub mod project_version_and_milestone;

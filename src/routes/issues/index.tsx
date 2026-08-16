@@ -29,7 +29,7 @@ function IssuesPage() {
         isLoading: isIssuesLoading,
         error: issuesError,
     } = backlog.issues.useGetAll({
-        projectId: projectId ?? 0,
+        projectIdOrKey: projectId ?? 0,
         order: 'desc',
         offset: pagination.pageIndex * pagination.pageSize,
         count: pagination.pageSize,

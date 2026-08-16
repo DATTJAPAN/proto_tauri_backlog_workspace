@@ -14,7 +14,7 @@ import {
 
 import {backlog} from '@/backlog/Backlog'
 import type {BacklogProjectIssueComment} from '@/backlog/BacklogProjectIssueComments'
-import type {BacklogProjectIssueAttachment} from '@/backlog/BacklogProjectIssues'
+import type {BacklogProjectIssueAttachment} from '@/backlog/BacklogIssues.ts'
 import type {BacklogUser} from '@/backlog/BacklogUsers'
 import {Avatar, AvatarFallback, AvatarGroup, AvatarImage} from '@/components/ui/avatar'
 import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card'

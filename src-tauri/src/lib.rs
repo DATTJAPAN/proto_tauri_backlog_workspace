@@ -110,20 +110,34 @@ pub fn run() {
         .invoke_handler(tauri::generate_handler![
             greet,
             get_or_create_vault_password,
+            // Core Issue Commands
+            backlog::issue::backlog_issue_get,
+            backlog::issue::backlog_issue_list,
+            backlog::issue::backlog_issue_count,
+            // OAuth & Auth Status
             backlog::oauth::backlog_oauth_authorization_url,
             backlog::oauth::backlog_oauth_exchange_code,
             backlog::oauth::backlog_oauth_refresh_token,
             backlog::oauth::backlog_connection_status,
             backlog::oauth::backlog_api_key_connection_status,
+            // Projects
             backlog::project::backlog_project_list,
+            // DEPRECATED: Prefer `backlog::issue::*` equivalents above
             backlog::project_issue::backlog_project_issue_get,
             backlog::project_issue::backlog_project_issue_list,
             backlog::project_issue::backlog_project_issue_count,
+            // Attachments, Comments, Types, & Users
             backlog::project_issue_attachment::backlog_project_issue_attachment_get,
             backlog::project_issue_comment::backlog_project_issue_comment_list,
             backlog::project_issue_comment::backlog_project_issue_comment_count,
+            backlog::project_issue_type::backlog_project_issue_type_list,
+            backlog::project_status::backlog_project_status_list,
             backlog::project_user::backlog_project_user_list,
+            backlog::project_version_and_milestone::backlog_project_version_and_milestone_list,
             backlog::user::backlog_get_current_user,
+            // Others
+            backlog::priority::backlog_priority_list,
+            backlog::resolution::backlog_resolution_list,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

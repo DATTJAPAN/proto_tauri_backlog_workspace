@@ -1,7 +1,7 @@
 import type {ReactNode} from 'react'
 import {CalendarDaysIcon, ClockIcon, FileIcon, FlagIcon, ListTodoIcon, UserIcon} from 'lucide-react'
 
-import type {BacklogProjectIssue} from '@/backlog/BacklogProjectIssues'
+import type {BacklogProjectIssue} from '@/backlog/BacklogIssues.ts'
 import type {BacklogUser} from '@/backlog/BacklogUsers'
 import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar'
 import {Badge} from '@/components/ui/badge'

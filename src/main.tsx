@@ -6,7 +6,7 @@ import {TanStackRouterDevtools} from '@tanstack/react-router-devtools'
 import {routeTree} from './routeTree.gen'
 import '../app.css'
 
-const queryClient = new QueryClient({
+export const queryClient = new QueryClient({
     defaultOptions: {
         queries: {
             staleTime: 1000 * 60 * 5, // Keep cached data fresh for 5 minutes
@@ -21,8 +21,12 @@ const router = createRouter({
     routeTree,
     defaultPreload: 'intent',
     scrollRestoration: true,
+    context: {
+        queryClient, // Pass queryClient into router context
+    },
 })
 
+// Register the Router Context Type so loader `context` is typed!
 declare module '@tanstack/react-router' {
     interface Register {
         router: typeof router

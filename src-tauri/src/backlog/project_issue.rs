@@ -31,6 +31,7 @@ pub(crate) fn backlog_project_issue_resource_url(
 }
 
 /// Returns a single issue by its numeric ID or issue key.
+#[deprecated(note = "Use `backlog_issue_get` instead")]
 #[tauri::command]
 pub async fn backlog_project_issue_get(
     space_url: String,
@@ -48,10 +49,11 @@ pub async fn backlog_project_issue_get(
             access_token,
         },
     )
-    .await
+        .await
 }
 
 /// Returns issues belonging to a project visible to the connected user.
+#[deprecated(note = "Use `backlog_issue_list` instead")]
 #[tauri::command]
 pub async fn backlog_project_issue_list(
     space_url: String,
@@ -71,10 +73,11 @@ pub async fn backlog_project_issue_list(
             access_token,
         },
     )
-    .await
+        .await
 }
 
 /// Returns the number of issues matching frontend-provided filters.
+#[deprecated(note = "Use `backlog_issue_count` instead")]
 #[tauri::command]
 pub async fn backlog_project_issue_count(
     space_url: String,
@@ -95,5 +98,5 @@ pub async fn backlog_project_issue_count(
             access_token,
         },
     )
-    .await
+        .await
 }

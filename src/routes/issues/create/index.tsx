@@ -1,20 +1,60 @@
-import {createFileRoute} from '@tanstack/react-router'
-import {CreateIssueForm} from "@/routes/issues/create/_components/_create-issue-form.tsx";
-import {AppShell} from "@/layout/shell/app-shell.tsx";
-import {SidebarTrigger} from "@/components/ui/sidebar.tsx";
-import {Separator} from "@/components/ui/separator.tsx";
-import {ListTodoIcon} from "lucide-react";
+import {createFileRoute, redirect} from '@tanstack/react-router'
+import {ListTodoIcon} from 'lucide-react'
 
+import {backlog} from '@/backlog/Backlog'
+import {Separator} from '@/components/ui/separator'
+import {SidebarTrigger} from '@/components/ui/sidebar'
+import {AppShell} from '@/layout/shell/app-shell'
+import {CreateIssueForm} from './_components/_create-issue-form'
 
 export const Route = createFileRoute('/issues/create/')({
+    beforeLoad: async () => {
+        if (!(await backlog.isConnected())) throw redirect({to: '/on-boarding'})
+    },
+    loader: async ({context}) => {
+        const projectId = backlog.projects.getActiveId()
+        if (!projectId) return {projectId: null}
+
+        const {queryClient} = context
+
+        await Promise.all([
+            queryClient.ensureQueryData({
+                queryKey: ['backlog', 'resolution', 'list', 'backlog_resolution_list'],
+                queryFn: () => backlog.resolution.getAll(),
+            }),
+            queryClient.ensureQueryData({
+                queryKey: ['backlog', 'priority', 'list', 'backlog_priority_list'],
+                queryFn: () => backlog.priority.getAll(),
+            }),
+            queryClient.ensureQueryData({
+                queryKey: ["backlog", "project_users", "list", "backlog_project_user_list", String(projectId)],
+                queryFn: () => backlog.projectUsers.getAll(projectId, {excludeGroupMembers: false}),
+            }),
+            queryClient.ensureQueryData({
+                queryKey: ["backlog", "project_issue_types", "list", "backlog_project_issue_type_list", String(projectId)],
+                queryFn: () => backlog.projectIssueTypes.getAll(projectId),
+            }),
+            queryClient.ensureQueryData({
+                queryKey: ["backlog", "project_status", "list", "backlog_project_status_list", String(projectId)],
+                queryFn: () => backlog.projectStatus.getAll(projectId),
+            }),
+            queryClient.ensureQueryData({
+                queryKey: ["backlog", "project_users", "list", "backlog_project_user_list", String(projectId)],
+                queryFn: () => backlog.projectUsers.getAll(projectId, {excludeGroupMembers: false}),
+            }),
+        ])
+
+        return {projectId}
+    },
     component: CreateIssuePage,
 })
 
 function CreateIssuePage() {
+    const {projectId} = Route.useLoaderData()
 
     return (
         <AppShell>
-            <header className="sticky top-0 flex h-14 shrink-0 items-center gap-3 border-b bg-background px-4">
+            <header className="sticky top-0 z-10 flex h-14 shrink-0 items-center gap-3 border-b bg-background px-4">
                 <SidebarTrigger/>
                 <Separator orientation="vertical" className="data-[orientation=vertical]:h-4"/>
                 <ListTodoIcon className="size-4 text-muted-foreground"/>
@@ -23,8 +63,7 @@ function CreateIssuePage() {
 
             <main className="min-w-0 flex-1 overflow-y-auto p-4 sm:p-6">
                 <div className="mx-auto max-w-7xl space-y-5">
-
-                    <CreateIssueForm/>
+                    <CreateIssueForm projectIdOrKey={projectId}/>
                 </div>
             </main>
         </AppShell>
