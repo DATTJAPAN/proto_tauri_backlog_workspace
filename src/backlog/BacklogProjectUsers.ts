@@ -46,7 +46,7 @@ export class BacklogProjectUsers {
         options?: BacklogProjectUserListOptions,
     ) {
         return useQuery({
-            queryKey: ['backlog', 'project_users', 'list', 'backlog_project_user_list', String(projectIdOrKey), options],
+            queryKey: ['backlog', 'project', 'user', 'list', 'backlog_project_user_list', String(projectIdOrKey), options],
             queryFn: () => this.getAll(projectIdOrKey!, options),
             enabled: Boolean(projectIdOrKey),
         })

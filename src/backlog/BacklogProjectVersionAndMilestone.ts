@@ -1,17 +1,15 @@
-import type {BacklogAuthentication} from "@/backlog/BacklogAuthentication.ts";
-import {invoke} from "@tauri-apps/api/core";
-import {useQuery} from "@tanstack/react-query";
+import {useQuery} from '@tanstack/react-query'
+import {invoke} from '@tauri-apps/api/core'
 
+import type {BacklogAuthentication} from './BacklogAuthentication'
 
-export type BacklogProjectStatusStruct = {
+export type BacklogProjectVersionAndMilestoneStruct = {
     id: number
     projectId: number
     name: string
-    color: string
-    displayOrder: number
 }
 
-export class BacklogProjectStatus {
+export class BacklogProjectVersionAndMilestone {
     private readonly _authentication: BacklogAuthentication
 
     public constructor(authentication: BacklogAuthentication) {
@@ -19,14 +17,11 @@ export class BacklogProjectStatus {
     }
 
     // --- API Methods ---
-
-    public async getAll(projectIdOrKey: number | string): Promise<BacklogProjectStatusStruct[]> {
+    public async getAll(projectIdOrKey: number | string): Promise<BacklogProjectVersionAndMilestoneStruct[]> {
         const connection = await this._authentication.getConnection()
         if (!connection) return []
-
         const queryString: [string, string | boolean][] = []
-
-        return invoke<BacklogProjectStatusStruct[]>('backlog_project_status_list', {
+        return invoke<BacklogProjectVersionAndMilestoneStruct[]>('backlog_project_version_and_milestone_list', {
             spaceUrl: connection.spaceUrl,
             projectIdOrKey: String(projectIdOrKey),
             queryString,
@@ -35,12 +30,10 @@ export class BacklogProjectStatus {
         })
     }
 
-
     // --- React Query Hooks ---
-
     public useGetAll(projectIdOrKey: number | string | null,) {
         return useQuery({
-            queryKey: ['backlog', 'project', 'status', 'list', 'backlog_project_status_list', String(projectIdOrKey)],
+            queryKey: ['backlog', 'project', 'version_and_milestone', 'list', 'backlog_project_version_and_milestone_list', String(projectIdOrKey)],
             queryFn: () => this.getAll(projectIdOrKey!),
             enabled: Boolean(projectIdOrKey),
         })

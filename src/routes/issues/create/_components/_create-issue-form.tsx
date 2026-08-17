@@ -51,14 +51,17 @@ import {
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs"
 import {cn} from "@/lib/utils"
 import {IssueMarkdown} from "./issue-markdown"
-import {UserSelectPopover} from "@/components/shadcn";
+import {UserSelectPopover} from "@/components/shadcn"
 
 const INITIAL_DESCRIPTION = "# Welcome to your wiki!\nA wiki is a Backlog page that allows for collaborative editing by its users.\n"
 
+// Form Schema matching Backlog API v2 Add Issue constraints
 const FormSchema = v.object({
+    projectId: v.optional(v.nullable(v.union([v.string(), v.number()]))),
     title: v.pipe(
         v.string(),
-        v.minLength(5, "Title must be at least 5 characters.")
+        v.minLength(1, "Summary is required."),
+        v.maxLength(255, "Summary must be 255 characters or less.")
     ),
     description: v.pipe(
         v.string(),
@@ -84,7 +87,7 @@ const FormSchema = v.object({
             v.regex(/^\d*(\.\d+)?$/, "Actual hours must be a valid number.")
         )
     ),
-    assignee: v.optional(v.nullable(v.string())), // Allow string or null
+    assignee: v.optional(v.nullable(v.string())),
 })
 
 interface CreateIssueFormProps {
@@ -100,6 +103,8 @@ export function CreateIssueForm({projectIdOrKey}: CreateIssueFormProps) {
     const [submitData, setSubmitData] = React.useState<string>("")
 
     // Pre-cached query data
+    const {data: categories = []} = backlog.projectCategory.useGetAll(projectIdOrKey)
+    const {data: versionAndMilestones = []} = backlog.projectVersionAndMilestone.useGetAll(projectIdOrKey)
     const {data: issueTypes = []} = backlog.projectIssueTypes.useGetAll(projectIdOrKey)
     const {data: projectStatuses = []} = backlog.projectStatus.useGetAll(projectIdOrKey)
     const {data: priorities = []} = backlog.priority.useGetAll()
@@ -110,23 +115,26 @@ export function CreateIssueForm({projectIdOrKey}: CreateIssueFormProps) {
     const defaultIssueType = issueTypes[0] ?? null
     const defaultStatus = projectStatuses[0] ?? null
     const defaultPriority = priorities.find((p) => p.name === "Normal") ?? priorities[0] ?? null
+    const defaultVersionAndMilestone = versionAndMilestones[0] ?? null
+    const defaultCategory = categories[0] ?? null
 
     const form = useForm({
         schema: FormSchema,
         initialInput: {
+            projectId: projectIdOrKey !== null ? String(projectIdOrKey) : undefined,
             title: "",
             description: defaultIssueType?.template_description || INITIAL_DESCRIPTION,
-            issueTypeId: defaultIssueType ? String(defaultIssueType.id) : "",
-            category: "Frontend",
-            statusId: defaultStatus ? String(defaultStatus.id) : "",
-            priorityId: defaultPriority ? String(defaultPriority.id) : "",
-            milestone: "v1.0.0",
-            version: "v1.0.0",
+            issueTypeId: defaultIssueType ? String(defaultIssueType.id) : undefined,
+            category: defaultCategory ? String(defaultCategory.id) : undefined,
+            statusId: defaultStatus ? String(defaultStatus.id) : undefined,
+            priorityId: defaultPriority ? String(defaultPriority.id) : undefined,
+            milestone: defaultVersionAndMilestone ? String(defaultVersionAndMilestone.id) : undefined,
+            version: defaultVersionAndMilestone ? String(defaultVersionAndMilestone.id) : undefined,
             startDate: "",
             dueDate: "",
             estimatedHours: "",
             actualHours: "",
-            assignee: null,
+            assignee: undefined,
         },
     })
 
@@ -138,6 +146,18 @@ export function CreateIssueForm({projectIdOrKey}: CreateIssueFormProps) {
             iconUrl: user.nulabAccount?.iconUrl,
         }))
     }, [projectUsers])
+
+    // Shared options for Milestone and Version selects
+    const versionAndMilestoneOptions = React.useMemo(() => {
+        return [
+            <NativeSelectOption key="none" value="">None</NativeSelectOption>,
+            ...versionAndMilestones.map((item) => (
+                <NativeSelectOption key={item.id} value={String(item.id)}>
+                    {item.name}
+                </NativeSelectOption>
+            ))
+        ]
+    }, [versionAndMilestones])
 
     React.useEffect(() => {
         const sentinel = sentinelRef.current
@@ -155,7 +175,30 @@ export function CreateIssueForm({projectIdOrKey}: CreateIssueFormProps) {
     }, [])
 
     const handleSubmit: SubmitHandler<typeof FormSchema> = (output) => {
-        setSubmitData(JSON.stringify(output, null, 2))
+        // Form parameters exact schema according to Backlog API v2 (POST /api/v2/issues)
+        const apiPayload = {
+            projectId: projectIdOrKey ? Number(projectIdOrKey) : (output.projectId ? Number(output.projectId) : undefined),
+            summary: output.title,
+            issueTypeId: output.issueTypeId ? Number(output.issueTypeId) : undefined,
+            priorityId: output.priorityId ? Number(output.priorityId) : undefined,
+            description: output.description || undefined,
+            startDate: output.startDate || undefined,
+            dueDate: output.dueDate || undefined,
+            estimatedHours: output.estimatedHours ? Number(output.estimatedHours) : undefined,
+            actualHours: output.actualHours ? Number(output.actualHours) : undefined,
+            statusId: output.statusId ? Number(output.statusId) : undefined,
+            assigneeId: output.assignee ? Number(output.assignee) : undefined,
+            "categoryId[]": output.category ? [Number(output.category)] : undefined,
+            "versionId[]": output.version ? [Number(output.version)] : undefined,
+            "milestoneId[]": output.milestone ? [Number(output.milestone)] : undefined,
+        }
+
+        // Filter out undefined attributes for clean API payload output
+        const cleanedPayload = Object.fromEntries(
+            Object.entries(apiPayload).filter(([_, v]) => v !== undefined)
+        )
+
+        setSubmitData(JSON.stringify(cleanedPayload, null, 2))
         setShowSubmitDialog(true)
 
         toast.success("Issue payload generated!", {
@@ -291,7 +334,7 @@ export function CreateIssueForm({projectIdOrKey}: CreateIssueFormProps) {
                                                                 value={descriptionValue}
                                                                 placeholder="Include steps to reproduce, expected behavior, and code blocks..."
                                                                 rows={22}
-                                                                className="min-h-96 w-full resize-y rounded-none font-mono text-sm"
+                                                                className="min-h-96 w-full resize-y rounded-none font-mono text-sm [font-variant-ligatures:none]"
                                                                 aria-invalid={field.errors !== null}
                                                             />
                                                         </InputGroup>
@@ -372,7 +415,7 @@ export function CreateIssueForm({projectIdOrKey}: CreateIssueFormProps) {
                                                 <UserSelectPopover
                                                     options={userOptions}
                                                     value={field.input as string | null}
-                                                    onValueChange={(val) => field.onChange(val)}
+                                                    onValueChange={(val) => field.onChange(val || undefined)}
                                                     placeholder="No assignee"
                                                     searchPlaceholder="Search User"
                                                 />
@@ -556,14 +599,16 @@ export function CreateIssueForm({projectIdOrKey}: CreateIssueFormProps) {
                                                     Category
                                                 </FieldLabel>
                                                 <NativeSelect
-                                                    value={field.input ?? "Frontend"}
-                                                    onChange={(e) => field.onChange(e.target.value)}
+                                                    value={String(field.input ?? "")}
+                                                    onChange={(e) => field.onChange(e.target.value || undefined)}
                                                     className="h-8 w-full rounded-none text-xs"
                                                 >
-                                                    <NativeSelectOption value="Frontend">Frontend</NativeSelectOption>
-                                                    <NativeSelectOption value="Backend">Backend</NativeSelectOption>
-                                                    <NativeSelectOption value="DevOps">DevOps</NativeSelectOption>
-                                                    <NativeSelectOption value="Design">Design</NativeSelectOption>
+                                                    <NativeSelectOption value="">None</NativeSelectOption>
+                                                    {categories.map((cat) => (
+                                                        <NativeSelectOption key={cat.id} value={String(cat.id)}>
+                                                            {cat.name}
+                                                        </NativeSelectOption>
+                                                    ))}
                                                 </NativeSelect>
                                             </Field>
                                         )}
@@ -578,14 +623,11 @@ export function CreateIssueForm({projectIdOrKey}: CreateIssueFormProps) {
                                                     Milestone
                                                 </FieldLabel>
                                                 <NativeSelect
-                                                    value={field.input ?? "v1.0.0"}
-                                                    onChange={(e) => field.onChange(e.target.value)}
+                                                    value={String(field.input ?? "")}
+                                                    onChange={(e) => field.onChange(e.target.value || undefined)}
                                                     className="h-8 w-full rounded-none text-xs"
                                                 >
-                                                    <NativeSelectOption value="v1.0.0">v1.0.0
-                                                        Release</NativeSelectOption>
-                                                    <NativeSelectOption value="v1.1.0">v1.1.0 Patch</NativeSelectOption>
-                                                    <NativeSelectOption value="v2.0.0">v2.0.0 Major</NativeSelectOption>
+                                                    {versionAndMilestoneOptions}
                                                 </NativeSelect>
                                             </Field>
                                         )}
@@ -600,12 +642,11 @@ export function CreateIssueForm({projectIdOrKey}: CreateIssueFormProps) {
                                                     Version
                                                 </FieldLabel>
                                                 <NativeSelect
-                                                    value={field.input ?? "v1.0.0"}
-                                                    onChange={(e) => field.onChange(e.target.value)}
+                                                    value={String(field.input ?? "")}
+                                                    onChange={(e) => field.onChange(e.target.value || undefined)}
                                                     className="h-8 w-full rounded-none text-xs"
                                                 >
-                                                    <NativeSelectOption value="v1.0.0">v1.0.0</NativeSelectOption>
-                                                    <NativeSelectOption value="v1.0.1">v1.0.1</NativeSelectOption>
+                                                    {versionAndMilestoneOptions}
                                                 </NativeSelect>
                                             </Field>
                                         )}

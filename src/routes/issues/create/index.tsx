@@ -1,5 +1,6 @@
-import {createFileRoute, redirect} from '@tanstack/react-router'
+import {createFileRoute, redirect, useNavigate, useRouter} from '@tanstack/react-router'
 import {ListTodoIcon} from 'lucide-react'
+import {useEffect} from 'react'
 
 import {backlog} from '@/backlog/Backlog'
 import {Separator} from '@/components/ui/separator'
@@ -13,7 +14,7 @@ export const Route = createFileRoute('/issues/create/')({
     },
     loader: async ({context}) => {
         const projectId = backlog.projects.getActiveId()
-        if (!projectId) return {projectId: null}
+        if (!projectId) throw redirect({to: '/'})
 
         const {queryClient} = context
 
@@ -27,20 +28,24 @@ export const Route = createFileRoute('/issues/create/')({
                 queryFn: () => backlog.priority.getAll(),
             }),
             queryClient.ensureQueryData({
-                queryKey: ["backlog", "project_users", "list", "backlog_project_user_list", String(projectId)],
+                queryKey: ['backlog', 'project', 'user', 'list', 'backlog_project_user_list', String(projectId), {excludeGroupMembers: false}],
                 queryFn: () => backlog.projectUsers.getAll(projectId, {excludeGroupMembers: false}),
             }),
             queryClient.ensureQueryData({
-                queryKey: ["backlog", "project_issue_types", "list", "backlog_project_issue_type_list", String(projectId)],
+                queryKey: ['backlog', 'project', 'category', 'list', 'backlog_project_category_list', String(projectId)],
+                queryFn: () => backlog.projectCategory.getAll(projectId),
+            }),
+            queryClient.ensureQueryData({
+                queryKey: ["backlog", 'project', "issue_type", "list", "backlog_project_issue_type_list", String(projectId)],
                 queryFn: () => backlog.projectIssueTypes.getAll(projectId),
             }),
             queryClient.ensureQueryData({
-                queryKey: ["backlog", "project_status", "list", "backlog_project_status_list", String(projectId)],
+                queryKey: ["backlog", "project", 'status', "list", "backlog_project_status_list", String(projectId)],
                 queryFn: () => backlog.projectStatus.getAll(projectId),
             }),
             queryClient.ensureQueryData({
-                queryKey: ["backlog", "project_users", "list", "backlog_project_user_list", String(projectId)],
-                queryFn: () => backlog.projectUsers.getAll(projectId, {excludeGroupMembers: false}),
+                queryKey: ['backlog', 'project', 'version_and_milestone', 'list', 'backlog_project_version_and_milestone_list', String(projectId)],
+                queryFn: () => backlog.projectVersionAndMilestone.getAll(projectId),
             }),
         ])
 
@@ -51,6 +56,21 @@ export const Route = createFileRoute('/issues/create/')({
 
 function CreateIssuePage() {
     const {projectId} = Route.useLoaderData()
+    const navigate = useNavigate()
+    const router = useRouter()
+
+    useEffect(() => {
+        return backlog.projects.onActiveChanged((newProjectId) => {
+            if (!newProjectId) {
+                void navigate({to: '/'})
+                return
+            }
+
+            if (newProjectId !== projectId) {
+                void router.invalidate()
+            }
+        })
+    }, [projectId, navigate, router])
 
     return (
         <AppShell>
@@ -63,7 +83,7 @@ function CreateIssuePage() {
 
             <main className="min-w-0 flex-1 overflow-y-auto p-4 sm:p-6">
                 <div className="mx-auto max-w-7xl space-y-5">
-                    <CreateIssueForm projectIdOrKey={projectId}/>
+                    <CreateIssueForm key={projectId} projectIdOrKey={projectId}/>
                 </div>
             </main>
         </AppShell>

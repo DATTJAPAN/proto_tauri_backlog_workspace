@@ -42,7 +42,7 @@ export class BacklogProjectIssueTypes {
 
     public useGetAll(projectIdOrKey: number | string | null,) {
         return useQuery({
-            queryKey: ['backlog', 'project_issue_types', 'list', 'backlog_project_issue_type_list', String(projectIdOrKey)],
+            queryKey:  ["backlog", 'project', "issue_type", "list", "backlog_project_issue_type_list", String(projectIdOrKey)],
             queryFn: () => this.getAll(projectIdOrKey!),
             enabled: Boolean(projectIdOrKey),
         })
