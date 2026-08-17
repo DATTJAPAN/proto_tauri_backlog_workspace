@@ -1,7 +1,7 @@
 import type {ReactNode} from 'react'
 import {CalendarDaysIcon, ClockIcon, FileIcon, FlagIcon, ListTodoIcon, UserIcon} from 'lucide-react'
 
-import type {BacklogProjectIssue} from '@/backlog/BacklogIssues.ts'
+import type {BacklogProjectIssueStruct} from '@/backlog/BacklogIssues.ts'
 import type {BacklogUser} from '@/backlog/BacklogUsers'
 import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar'
 import {Badge} from '@/components/ui/badge'
@@ -9,7 +9,7 @@ import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card'
 import {h_color_adjust, h_color_contrast} from '@/helper/color'
 import {h_datefns_date, h_datefns_datetime, h_datefns_is_overdue} from '@/helper/datefns'
 
-export function IssueTitle({issue}: {issue: BacklogProjectIssue}) {
+export function IssueTitle({issue}: {issue: BacklogProjectIssueStruct}) {
     const typeBackground = h_color_adjust({
         color: issue.issueType.color,
         strategy: 'auto',
@@ -44,7 +44,7 @@ export function IssueTitle({issue}: {issue: BacklogProjectIssue}) {
     )
 }
 
-export function IssueDetails({issue}: {issue: BacklogProjectIssue}) {
+export function IssueDetails({issue}: {issue: BacklogProjectIssueStruct}) {
     return (
         <Card>
             <CardHeader className="border-b"><CardTitle>Details</CardTitle></CardHeader>
@@ -80,7 +80,7 @@ export function IssueDetails({issue}: {issue: BacklogProjectIssue}) {
     )
 }
 
-export function IssuePeople({issue}: {issue: BacklogProjectIssue}) {
+export function IssuePeople({issue}: {issue: BacklogProjectIssueStruct}) {
     return (
         <Card>
             <CardHeader className="border-b">
@@ -121,7 +121,7 @@ function Person({label, user}: {label: string; user: BacklogUser | null}) {
     )
 }
 
-function isClosed(issue: BacklogProjectIssue): boolean {
+function isClosed(issue: BacklogProjectIssueStruct): boolean {
     return issue.status.id === 4 || issue.status.name.trim().toLowerCase() === 'closed'
 }
 

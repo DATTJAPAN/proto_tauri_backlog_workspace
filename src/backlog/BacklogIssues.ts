@@ -1,13 +1,13 @@
-import {useQuery} from '@tanstack/react-query'
+import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query'
 import {invoke} from '@tauri-apps/api/core'
 
 import type {BacklogAuthentication} from './BacklogAuthentication'
 import type {BacklogProjectIssueNamedResource} from './BacklogProjectIssueNamedResource'
-import type {BacklogProjectStatus} from './BacklogProjectStatus.ts'
+import {BacklogProjectStatusStruct} from './BacklogProjectStatus.ts'
 import type {BacklogUser} from './BacklogUsers'
 import {BacklogProjectIssueComments} from './BacklogProjectIssueComments'
 
-export type BacklogProjectIssueType = {
+export type BacklogProjectIssueTypeStruct = {
     id: number
     projectId: number
     name: string
@@ -15,21 +15,21 @@ export type BacklogProjectIssueType = {
     displayOrder: number
 }
 
-export type BacklogProjectIssue = {
+export type BacklogProjectIssueStruct = {
     id: number
     projectId: number
     issueKey: string
     keyId: number
     summary: string
-    issueType: BacklogProjectIssueType
+    issueType: BacklogProjectIssueTypeStruct
     description: string | null
     resolution: BacklogProjectIssueNamedResource | null
-    status: BacklogProjectStatus
+    status: BacklogProjectStatusStruct
     priority: BacklogProjectIssueNamedResource
     assignee: BacklogUser | null
     category: BacklogProjectIssueNamedResource[]
-    versions: BacklogProjectIssueVersion[]
-    milestone: BacklogProjectIssueVersion[]
+    versions: BacklogProjectIssueVersionStruct[]
+    milestone: BacklogProjectIssueVersionStruct[]
     startDate: string | null
     dueDate: string | null
     estimatedHours: number | null
@@ -46,7 +46,7 @@ export type BacklogProjectIssue = {
     stars: unknown[]
 }
 
-export type BacklogProjectIssueVersion = {
+export type BacklogProjectIssueVersionStruct = {
     id: number
     projectId: number
     name: string
@@ -77,6 +77,30 @@ export type BacklogIssueListOptions = {
     count?: number
 }
 
+export type BacklogIssueCreateParam = {
+    projectId: number
+    summary: string
+    issueTypeId: number
+    priorityId: number
+    parentIssueId?: number | null
+    description?: string | null
+    startDate?: string | null
+    dueDate?: string | null
+    estimatedHours?: number | null
+    actualHours?: number | null
+    categoryIds?: number[] | null
+    'categoryId[]'?: number[] | null
+    versionIds?: number[] | null
+    'versionId[]'?: number[] | null
+    milestoneIds?: number[] | null
+    'milestoneId[]'?: number[] | null
+    assigneeId?: number | null
+    notifiedUserIds?: number[] | null
+    'notifiedUserId[]'?: number[] | null
+    attachmentIds?: number[] | null
+    'attachmentId[]'?: number[] | null
+}
+
 export class BacklogIssues {
     private readonly _authentication: BacklogAuthentication
     public readonly comments: BacklogProjectIssueComments
@@ -88,13 +112,44 @@ export class BacklogIssues {
 
     // --- API Methods ---
 
-    public async get(issueIdOrKey: number | string): Promise<BacklogProjectIssue> {
+    public async get(issueIdOrKey: number | string): Promise<BacklogProjectIssueStruct> {
         const connection = await this._authentication.getConnection()
         if (!connection) throw new Error('Backlog is not connected')
 
-        return invoke<BacklogProjectIssue>('backlog_issue_get', {
+        return invoke<BacklogProjectIssueStruct>('backlog_issue_get', {
             spaceUrl: connection.spaceUrl,
             issueIdOrKey: String(issueIdOrKey),
+            apiKey: connection.method === 'api-key' ? connection.apiKey : null,
+            accessToken: connection.method === 'oauth' ? connection.accessToken : null,
+        })
+    }
+
+    public async create(params: BacklogIssueCreateParam): Promise<BacklogProjectIssueStruct> {
+        const connection = await this._authentication.getConnection()
+        if (!connection) throw new Error('Backlog is not connected')
+
+        const payload = {
+            projectId: params.projectId,
+            summary: params.summary,
+            issueTypeId: params.issueTypeId,
+            priorityId: params.priorityId,
+            parentIssueId: params.parentIssueId ?? null,
+            description: params.description ?? null,
+            startDate: params.startDate ?? null,
+            dueDate: params.dueDate ?? null,
+            estimatedHours: params.estimatedHours ?? null,
+            actualHours: params.actualHours ?? null,
+            'categoryId[]': params['categoryId[]'] ?? params.categoryIds ?? null,
+            'versionId[]': params['versionId[]'] ?? params.versionIds ?? null,
+            'milestoneId[]': params['milestoneId[]'] ?? params.milestoneIds ?? null,
+            assigneeId: params.assigneeId ?? null,
+            'notifiedUserId[]': params['notifiedUserId[]'] ?? params.notifiedUserIds ?? null,
+            'attachmentId[]': params['attachmentId[]'] ?? params.attachmentIds ?? null,
+        }
+
+        return invoke<BacklogProjectIssueStruct>('backlog_issue_create', {
+            spaceUrl: connection.spaceUrl,
+            params: payload,
             apiKey: connection.method === 'api-key' ? connection.apiKey : null,
             accessToken: connection.method === 'oauth' ? connection.accessToken : null,
         })
@@ -116,16 +171,15 @@ export class BacklogIssues {
         })
     }
 
-    public async getAll(options: BacklogIssueListOptions): Promise<BacklogProjectIssue[]> {
+    public async getAll(options: BacklogIssueListOptions): Promise<BacklogProjectIssueStruct[]> {
         const connection = await this._authentication.getConnection()
         if (!connection) return []
 
-        // Handle either Project ID (e.g., 100) or Project Key (e.g., "PROJ")
         const projectQueryParam = typeof options.projectIdOrKey === 'number'
             ? ['_projectId[]', String(options.projectIdOrKey)]
             : ['_projectIdOrKey[]', String(options.projectIdOrKey)]
 
-        return invoke<BacklogProjectIssue[]>('backlog_issue_list', {
+        return invoke<BacklogProjectIssueStruct[]>('backlog_issue_list', {
             spaceUrl: connection.spaceUrl,
             queryString: [
                 projectQueryParam,
@@ -157,6 +211,19 @@ export class BacklogIssues {
     }
 
     // --- React Query Hooks ---
+
+    public useCreate() {
+        const queryClient = useQueryClient()
+
+        return useMutation({
+            mutationFn: (params: BacklogIssueCreateParam) => this.create(params),
+            onSuccess: () => {
+                void queryClient.invalidateQueries({
+                    queryKey: ['backlog', 'issues'],
+                })
+            },
+        })
+    }
 
     public useGetAll(options: BacklogIssueListOptions) {
         const isEnabled = Boolean(options.projectIdOrKey)

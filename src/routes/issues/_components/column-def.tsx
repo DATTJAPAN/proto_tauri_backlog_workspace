@@ -2,7 +2,7 @@ import type {ColumnDef} from '@tanstack/react-table'
 import {Link} from '@tanstack/react-router'
 import {ArrowRightIcon, CheckCircle2Icon, CircleIcon, FlagIcon} from 'lucide-react'
 
-import type {BacklogProjectIssue} from '@/backlog/BacklogIssues.ts'
+import type {BacklogProjectIssueStruct} from '@/backlog/BacklogIssues.ts'
 import type {BacklogUser} from '@/backlog/BacklogUsers'
 import {DataTableColumnHeader, type DataTableFeatures} from '@/components/shadcn'
 import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar'
@@ -13,7 +13,7 @@ import {cn} from '@/lib/utils'
 
 const issueTypeColorCache = new Map<string, { backgroundColor: string; color: string }>()
 
-export const issueColumns: ColumnDef<DataTableFeatures, BacklogProjectIssue, unknown>[] = [
+export const issueColumns: ColumnDef<DataTableFeatures, BacklogProjectIssueStruct, unknown>[] = [
     {
         id: 'issueKey', accessorKey: 'issueKey', size: 120,
         header: ({column}) => <DataTableColumnHeader column={column} title="Key"/>,
@@ -189,7 +189,7 @@ function isIssueClosed(statusId: number, statusName: string): boolean {
     return statusId === 4 || statusName.trim().toLowerCase() === 'closed'
 }
 
-function isIssueOverdue(issue: BacklogProjectIssue): boolean {
+function isIssueOverdue(issue: BacklogProjectIssueStruct): boolean {
     return !isIssueClosed(issue.status.id, issue.status.name)
         && h_datefns_is_overdue({value: issue.dueDate})
 }

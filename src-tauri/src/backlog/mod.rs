@@ -36,6 +36,7 @@ macro_rules! generate_backlog_handler {
             $crate::backlog::issue::backlog_issue_get,
             $crate::backlog::issue::backlog_issue_list,
             $crate::backlog::issue::backlog_issue_count,
+            $crate::backlog::issue::backlog_issue_create,
             $crate::backlog::project_issue_attachment::backlog_project_issue_attachment_get,
             $crate::backlog::project_issue_comment::backlog_project_issue_comment_list,
             $crate::backlog::project_issue_comment::backlog_project_issue_comment_count,

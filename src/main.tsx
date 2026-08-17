@@ -5,6 +5,7 @@ import {ReactQueryDevtools} from '@tanstack/react-query-devtools'
 import {TanStackRouterDevtools} from '@tanstack/react-router-devtools'
 import {routeTree} from './routeTree.gen'
 import '../app.css'
+import {Toaster} from "@/components/ui/toast"
 
 export const queryClient = new QueryClient({
     defaultOptions: {
@@ -40,6 +41,7 @@ if (!rootElement.innerHTML) {
     root.render(
         <QueryClientProvider client={queryClient}>
             <RouterProvider router={router}/>
+            <Toaster/>
             {isDebug && (
                 <>
                     <ReactQueryDevtools initialIsOpen={false}/>

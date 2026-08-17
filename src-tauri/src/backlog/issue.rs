@@ -1,12 +1,11 @@
 use crate::backlog::oauth::validate_space_url;
-
 use crate::backlog::project_issue_attachment::BacklogProjectIssueAttachmentStruct;
 use crate::backlog::project_issue_named_resource::BacklogProjectIssueNamedResourceStruct;
 use crate::backlog::project_issue_type::BacklogProjectIssueTypeStruct;
 use crate::backlog::project_issue_version::BacklogProjectIssueVersionStruct;
 use crate::backlog::project_status::BacklogProjectStatusStruct;
 use crate::backlog::user::BacklogUserStruct;
-use crate::http_request::{get, HttpGetOptions, QueryValue};
+use crate::http_request::{get, post, BodyType, HttpGetOptions, HttpPostOptions, QueryValue};
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use url::Url;
@@ -59,6 +58,51 @@ pub struct BacklogIssueCountStruct {
     pub count: u64,
 }
 
+#[derive(Debug, Clone, Serialize, Deserialize, Default)]
+#[serde(rename_all = "camelCase")]
+pub struct BacklogIssueCreateParamStruct {
+    pub project_id: i64,
+    pub summary: String,
+    pub issue_type_id: i64,
+    pub priority_id: i64,
+
+    #[serde(skip_serializing_if = "Option::is_none", default)]
+    pub parent_issue_id: Option<i64>,
+
+    #[serde(skip_serializing_if = "Option::is_none", default)]
+    pub description: Option<String>,
+
+    #[serde(skip_serializing_if = "Option::is_none", default)]
+    pub start_date: Option<String>,
+
+    #[serde(skip_serializing_if = "Option::is_none", default)]
+    pub due_date: Option<String>,
+
+    #[serde(skip_serializing_if = "Option::is_none", default)]
+    pub estimated_hours: Option<f64>,
+
+    #[serde(skip_serializing_if = "Option::is_none", default)]
+    pub actual_hours: Option<f64>,
+
+    #[serde(rename = "categoryId[]", alias = "categoryIds", skip_serializing_if = "Option::is_none", default)]
+    pub category_ids: Option<Vec<i64>>,
+
+    #[serde(rename = "versionId[]", alias = "versionIds", skip_serializing_if = "Option::is_none", default)]
+    pub version_ids: Option<Vec<i64>>,
+
+    #[serde(rename = "milestoneId[]", alias = "milestoneIds", skip_serializing_if = "Option::is_none", default)]
+    pub milestone_ids: Option<Vec<i64>>,
+
+    #[serde(skip_serializing_if = "Option::is_none", default)]
+    pub assignee_id: Option<i64>,
+
+    #[serde(rename = "notifiedUserId[]", alias = "notifiedUserIds", skip_serializing_if = "Option::is_none", default)]
+    pub notified_user_ids: Option<Vec<i64>>,
+
+    #[serde(rename = "attachmentId[]", alias = "attachmentIds", skip_serializing_if = "Option::is_none", default)]
+    pub attachment_ids: Option<Vec<i64>>,
+}
+
 pub(crate) fn backlog_issue_resource_url(
     space_url: &str,
     issue_id_or_key: &str,
@@ -103,7 +147,7 @@ pub async fn backlog_issue_get(
             access_token,
         },
     )
-    .await
+        .await
 }
 
 /// Returns issues belonging to a project visible to the connected user.
@@ -126,7 +170,7 @@ pub async fn backlog_issue_list(
             access_token,
         },
     )
-    .await
+        .await
 }
 
 /// Returns the number of issues matching frontend-provided filters.
@@ -150,5 +194,31 @@ pub async fn backlog_issue_count(
             access_token,
         },
     )
-    .await
+        .await
+}
+
+/// Creates a new issue in a Backlog project.
+#[tauri::command]
+pub async fn backlog_issue_create(
+    space_url: String,
+    params: BacklogIssueCreateParamStruct,
+    api_key: Option<String>,
+    access_token: Option<String>,
+) -> Result<BacklogIssueStruct, String> {
+    let mut create_url = validate_space_url(&space_url)?;
+    create_url.set_path("/api/v2/issues");
+    create_url.set_query(None);
+    create_url.set_fragment(None);
+
+    post(
+        create_url,
+        HttpPostOptions {
+            query_string: Vec::new(),
+            body: Some(params),
+            body_type: BodyType::Form,
+            api_key,
+            access_token,
+        },
+    )
+        .await
 }
