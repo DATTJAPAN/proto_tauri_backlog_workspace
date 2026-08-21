@@ -1,25 +1,42 @@
 "use client"
 
 import * as React from "react"
-import {HomeIcon, ShieldCheckIcon} from 'lucide-react'
+import {HomeIcon, ListTodoIcon, ShieldCheckIcon} from 'lucide-react'
 
-import {NavMain} from "@/components/nav-main"
+import {NavMain, type NavMainItem} from "@/components/nav-main"
 import {NavSecondary} from "@/components/nav-secondary"
 import {ProjectSwitcher} from "@/components/project-switcher"
 import {backlog} from '@/backlog/Backlog'
-import type {BacklogProject} from '@/backlog/BacklogProjects'
 import {
     Sidebar,
     SidebarContent,
     SidebarHeader,
     SidebarRail,
 } from "@/components/ui/sidebar"
-const data = {
+
+const data: { navMain: NavMainItem[]; navSecondary: { title: string; url: string; icon: React.ReactNode }[] } = {
     navMain: [
         {
             title: "Home",
             url: "/dashboard/",
             icon: <HomeIcon/>,
+        },
+        {
+            title: "Issues",
+            icon: <ListTodoIcon/>,
+            activePrefix: "/issues", // Keeps menu open for /issues, /issues/create, /issues/123, etc.
+            items: [
+                {
+                    title: "Issue List",
+                    url: "/issues/",
+                    exact: true,
+                },
+                {
+                    title: "Add Issues",
+                    url: "/issues/create/",
+                    exact: true,
+                },
+            ],
         },
     ],
     navSecondary: [
@@ -31,28 +48,14 @@ const data = {
     ],
 }
 
-export function SidebarLeft({
-                                ...props
-                            }: React.ComponentProps<typeof Sidebar>) {
-    const [projects, setProjects] = React.useState<BacklogProject[]>([])
-    const [loadingProjects, setLoadingProjects] = React.useState(true)
-    const [projectError, setProjectError] = React.useState<string | null>(null)
+export function SidebarLeft({...props}: React.ComponentProps<typeof Sidebar>) {
+    const {
+        data: projects = [],
+        isLoading: loadingProjects,
+        error: projectErrorObj,
+    } = backlog.projects.useGetAll()
 
-    React.useEffect(() => {
-        let active = true
-        void backlog.projects.getAll()
-            .then((result) => {
-                if (active) setProjects(result)
-            })
-            .catch((cause) => {
-                if (active) setProjectError(cause instanceof Error ? cause.message : String(cause))
-            })
-            .finally(() => {
-                if (active) setLoadingProjects(false)
-            })
-
-        return () => { active = false }
-    }, [])
+    const projectError = projectErrorObj?.message ?? null
 
     return (
         <Sidebar className="border-r-0" {...props}>

@@ -98,7 +98,6 @@ export function ProjectSwitcher({projects, loading, error}: ProjectSwitcherProps
                         </DropdownMenuGroup>
                     </DropdownMenuContent>
                 </DropdownMenu>
-                {error && <p className="px-2 pt-1 text-xs text-destructive">{error}</p>}
             </SidebarMenuItem>
         </SidebarMenu>
     )

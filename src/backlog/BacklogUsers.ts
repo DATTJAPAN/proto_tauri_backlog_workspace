@@ -1,3 +1,4 @@
+import {useQuery} from '@tanstack/react-query'
 import {invoke} from '@tauri-apps/api/core'
 
 import type {BacklogAuthentication} from './BacklogAuthentication'
@@ -8,7 +9,7 @@ export type BacklogUser = {
     name: string
     roleType: number
     lang: string | null
-    mailAddress: string
+    mailAddress: string | null
     nulabAccount: {
         nulabId: string
         name: string
@@ -26,6 +27,8 @@ export class BacklogUsers {
         this._authentication = authentication
     }
 
+    // --- API Methods ---
+
     public async getCurrent(): Promise<BacklogUser | null> {
         const connection = await this._authentication.getConnection()
         if (!connection) return null
@@ -34,6 +37,15 @@ export class BacklogUsers {
             spaceUrl: connection.spaceUrl,
             apiKey: connection.method === 'api-key' ? connection.apiKey : null,
             accessToken: connection.method === 'oauth' ? connection.accessToken : null,
+        })
+    }
+
+    // --- React Query Hooks ---
+
+    public useGetCurrent() {
+        return useQuery({
+            queryKey: ['backlog', 'users', 'current', 'backlog_get_current_user'],
+            queryFn: () => this.getCurrent(),
         })
     }
 }

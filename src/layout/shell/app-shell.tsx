@@ -7,11 +7,11 @@ import {SidebarRight} from "@/components/sidebar-right.tsx";
 export function AppShell({children}: PropsWithChildren) {
 
     return (
-        <div>
+        <div className="h-screen overflow-hidden">
             <TooltipProvider>
-                <SidebarProvider>
+                <SidebarProvider className="h-full min-h-0">
                     <SidebarLeft/>
-                    <SidebarInset>
+                    <SidebarInset className="h-full min-h-0 overflow-y-auto">
                         {children}
                     </SidebarInset>
                     <SidebarRight/>
